@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Abderrahmene Naceri | Hardware and Embedded Projects</title>
+<meta name="description" content="Electrical engineering student at the University of Windsor building FPGA, embedded, and robotics hardware.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0c1730; --night-2:#13224a; --paper:#f4f6fa; --white:#ffffff;
+  --ink:#121a2b; --muted:#5b667a; --blue:#2b63e0; --blue-soft:#8fb0ff;
+  --led:#ff4d2e; --sim:#4f8cff; --wip:#e2a63b;
+  --rule-l:#dfe4ec; --rule-d:#24345e;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;font-optical-sizing:auto;background:var(--night);color:#e8edf7;
+  transition:background-color .8s var(--ease),color .8s var(--ease);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body[data-theme=light]{background:var(--paper);color:var(--ink)}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+h1,h2,h3{font-weight:800;letter-spacing:-.02em;line-height:1.05}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background-color .5s,backdrop-filter .5s,box-shadow .5s}
+.nav.scrolled{background:color-mix(in srgb,var(--night) 82%,transparent);backdrop-filter:blur(10px)}
+body[data-theme=light] .nav.scrolled{background:color-mix(in srgb,var(--paper) 85%,transparent);box-shadow:0 1px 0 var(--rule-l)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav .mark{font-weight:800;text-decoration:none;font-size:17px;letter-spacing:-.01em}
+.nav ul{list-style:none;display:flex;gap:26px;font-size:14.5px;font-weight:500}
+.nav ul a{text-decoration:none;opacity:.78;transition:opacity .2s}
+.nav ul a:hover{opacity:1}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:110px 0 60px;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(46px,8.4vw,112px);font-weight:900;letter-spacing:-.045em;line-height:.95;color:#fff}
+.hero h1 span{display:block;color:var(--blue-soft)}
+.hero .lede{max-width:640px;font-size:clamp(17px,2vw,21px);margin-top:26px;color:#c6d0e4;line-height:1.5}
+.hero .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--rule-d);transition:background-color .25s,border-color .25s,transform .25s var(--ease)}
+.btn:hover{transform:translateY(-2px);border-color:var(--blue-soft)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{background:#3a74f5}
+.scope{margin-top:58px;position:relative}
+.scope canvas{width:100%;height:170px;display:block}
+.scope .cap{font-size:13px;color:#8e9bb8;margin-top:8px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.scope .cap b{color:#c6d0e4;font-weight:600}
+
+/* sections */
+section.band{padding:110px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:34px}
+.sec-head h2{font-size:clamp(34px,4.6vw,56px)}
+.sec-head p{max-width:520px;color:var(--muted);font-size:17px}
+body[data-theme=dark] .sec-head p{color:#9aa6c0}
+
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.filters button{font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid var(--rule-l);background:transparent;color:inherit;cursor:pointer;transition:background-color .25s,color .25s,border-color .25s}
+.filters button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.filters button:hover{border-color:var(--ink)}
+
+/* project grid */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:20px}
+.card{grid-column:span 2;background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--rule-l);cursor:pointer;display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;padding:0;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease),opacity .4s;}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(18,26,43,.45)}
+.card.big{grid-column:span 3}
+.card.hide{display:none}
+.card .media{aspect-ratio:16/10;background:#dde3ee;position:relative;overflow:hidden}
+.card .media img,.card .media video{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.card:hover .media img,.card:hover .media video{transform:scale(1.04)}
+.card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{font-size:19px;letter-spacing:-.015em}
+.card.big h3{font-size:23px}
+.card p{font-size:14.5px;color:var(--muted);line-height:1.45}
+.card .tools{font-size:12.5px;color:#7a8498;margin-top:auto;padding-top:6px}
+.card.text{background:transparent;border-style:dashed}
+.card.text .body{padding:20px}
+.status{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--led);box-shadow:0 0 0 3px color-mix(in srgb,var(--led) 22%,transparent)}
+.status.sim i{background:var(--sim);box-shadow:0 0 0 3px color-mix(in srgb,var(--sim) 22%,transparent)}
+.status.comp i{background:var(--wip);box-shadow:0 0 0 3px color-mix(in srgb,var(--wip) 25%,transparent)}
+.status.none{display:none}
+.play{position:absolute;right:12px;bottom:12px;font-size:12px;font-weight:600;color:#fff;background:rgba(12,23,48,.72);padding:5px 10px;border-radius:999px;backdrop-filter:blur(4px)}
+
+/* dialog */
+dialog{border:none;padding:0;border-radius:18px;width:min(1040px,94vw);max-height:92vh;margin:auto;background:var(--white);color:var(--ink);box-shadow:0 40px 80px -30px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(8,14,30,.66);backdrop-filter:blur(3px)}
+dialog[open]{animation:pop .45s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+.dlg{display:flex;flex-direction:column;max-height:92vh}
+.dlg-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:26px 28px 14px}
+.dlg-top h3{font-size:clamp(24px,3vw,34px)}
+.dlg-top .tag{font-size:16px;color:var(--muted);margin-top:6px;max-width:700px}
+.close{font:inherit;font-size:22px;line-height:1;width:40px;height:40px;border-radius:50%;border:1px solid var(--rule-l);background:#fff;cursor:pointer;flex:none}
+.dlg-scroll{overflow:auto;padding:0 28px 28px}
+.stage{border-radius:12px;overflow:hidden;background:#0d1426;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+.stage img,.stage video{width:100%;height:100%;object-fit:contain}
+.stage-cap{font-size:13.5px;color:var(--muted);margin:8px 0 0}
+.thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.thumbs button{flex:none;width:92px;height:60px;border-radius:7px;overflow:hidden;border:2px solid transparent;padding:0;cursor:pointer;background:#ddd;opacity:.65;transition:opacity .2s,border-color .2s}
+.thumbs button[aria-current=true]{border-color:var(--blue);opacity:1}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:2px solid var(--ink);border-bottom:1px solid var(--rule-l);margin:22px 0}
+.specs div{padding:10px 14px 10px 0}
+.specs div+div{border-left:1px solid var(--rule-l);padding-left:14px}
+.specs b{display:block;font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--blue)}
+.specs span{font-size:12.5px;color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.cols h4{font-size:15px;margin-bottom:6px}
+.cols ul{padding-left:18px;font-size:14.5px;color:#2a3346}
+.cols li{margin:4px 0}
+
+/* experience */
+.exp{display:grid;gap:22px}
+.xp{border:1px solid var(--rule-d);border-radius:16px;padding:26px;background:color-mix(in srgb,var(--night-2) 60%,transparent)}
+.xp header{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
+.xp h3{font-size:24px;color:#fff}
+.xp .org{color:var(--blue-soft);font-weight:600;font-size:15px;margin-top:4px}
+.xp .when{color:#8e9bb8;font-size:14px}
+.xp ul{margin-top:14px;padding-left:18px;color:#c6d0e4;font-size:15px}
+.xp li{margin:5px 0}
+.vids{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.vids figure{margin:0}
+.vids video{width:100%;aspect-ratio:9/14;object-fit:cover;border-radius:12px;background:#0a1124}
+.vids figcaption{font-size:13.5px;color:#9aa6c0;margin-top:8px;line-height:1.4}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:0 48px}
+.skill{padding:16px 0;border-top:1px solid var(--rule-l);display:grid;grid-template-columns:170px 1fr;gap:18px}
+.skill h3{font-size:15px;letter-spacing:0;font-weight:700;line-height:1.4}
+.skill p{font-size:14.5px;color:var(--muted)}
+
+/* contact */
+.contact h2{font-size:clamp(40px,7vw,92px);font-weight:900;letter-spacing:-.04em;color:#fff;line-height:.98}
+.contact .mail{display:inline-block;margin-top:24px;font-size:clamp(20px,3vw,30px);font-weight:700;color:var(--blue-soft);text-decoration:none;border-bottom:2px solid currentColor}
+.contact .links{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+footer{padding:30px 0 40px;color:#7d8aa8;font-size:13.5px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:980px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .card,.card.big{grid-column:span 1}
+  .duo{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .nav ul{gap:14px;font-size:13.5px}
+  .nav ul li.opt{display:none}
+  .grid{grid-template-columns:1fr}
+  .filters{flex-wrap:nowrap;overflow-x:auto;margin-left:-16px;margin-right:-16px;padding:0 16px 4px;scrollbar-width:none}
+  .filters button{flex:none}
+  .vids{grid-template-columns:1fr 1fr}
+  .vids figure:last-child{grid-column:span 2}
+  .vids figure:last-child video{aspect-ratio:16/10}
+  .skill{grid-template-columns:1fr;gap:4px}
+  section.band{padding:80px 0}
+  .dlg-top,.dlg-scroll{padding-left:18px;padding-right:18px}
+  .scope canvas{height:130px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<nav class="nav" id="nav"><div class="wrap">
+  <a class="mark" href="#top">A. Naceri</a>
+  <ul>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#lab">Experience</a></li>
+    <li class="opt"><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div></nav>
+
+<header class="hero" id="top" data-theme="dark">
+  <div class="wrap">
+    <h1>Abderrahmene<span>Naceri</span></h1>
+    <p class="lede">Electrical engineering student at the University of Windsor. I design FPGA logic, write embedded firmware and build robots, then prove they work on real hardware.</p>
+    <div class="links">
+      <a class="btn primary" href="#projects">See the projects</a>
+      <a class="btn" href="Abderrahmene_Naceri_Project_Portfolio.pdf" download>Download PDF portfolio</a>
+      <a class="btn" href="https://www.linkedin.com/in/abderrahmene-naceri" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/ANaceri26" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="scope" aria-hidden="true">
+      <canvas id="scope"></canvas>
+      <div class="cap"><span><b>SCL / SDA</b> from my I2C controller's simulation: one write to address 0x50</span><span>START · 0x50 W · 0x38 · 0x86 · 0x5C · STOP</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="band" id="projects" data-theme="light">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Projects</h2>
+      <p>Each project shows how far it got: running on real hardware, verified in simulation, or entered in a competition. Click any card for the details.</p>
+    </div>
+    <div class="filters rv" role="group" aria-label="Filter projects">
+      <button aria-pressed="true" data-f="all">All</button>
+      <button aria-pressed="false" data-f="fpga">FPGA and digital logic</button>
+      <button aria-pressed="false" data-f="embedded">Embedded and IoT</button>
+      <button aria-pressed="false" data-f="mech">Robotics and mechanical</button>
+      <button aria-pressed="false" data-f="soft">Software and security</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="band" id="lab" data-theme="dark">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 style="color:#fff">Experience</h2>
+      <p>Team and industry work. Rover arm simulation and Formula SAE STM32 work are on the way.</p>
+    </div>
+    <div class="exp">
+      <article class="xp rv">
+        <header><div><h3>Arm Team Lead, Robotics Controls and Software</h3><div class="org">UWindsor Rover Team</div></div><div class="when">Jan 2026 to present</div></header>
+        <ul>
+          <li>C++ command interface mapping keyboard and joystick input (Thrustmaster T.16000M) to multi-axis arm motion, with joint-limit and collision-safety logic.</li>
+          <li>Jetson Orin NX as the arm computer with an Arduino layer for low-level actuators; ROS 2 Humble / MoveIt 2 simulation with URDF, RViz and inverse kinematics.</li>
+          <li>ODrive S1 with a REV NEO v2.1 BLDC motor, evaluating Hall and AMT212B-OD absolute encoder feedback.</li>
+        </ul>
+        <div class="vids">
+          <figure><video data-src="media/rover_joystick.mp4" poster="media/rover_joystick.jpg" muted loop playsinline preload="none"></video><figcaption>Joystick axes read in Python and mapped to stepper motion on the bench.</figcaption></figure>
+          <figure><video data-src="media/rover_steppers.mp4" poster="media/rover_steppers.jpg" muted loop playsinline preload="none"></video><figcaption>Two stepper axes following the joystick in real time.</figcaption></figure>
+          <figure><video data-src="media/rover_odrive.mp4" poster="media/rover_odrive.jpg" muted loop playsinline preload="none"></video><figcaption>BLDC motor on an ODrive S1, with position, velocity and current plots.</figcaption></figure>
+        </div>
+      </article>
+      <div class="duo">
+        <article class="xp rv">
+          <header><div><h3>Controls Engineering Co-op</h3><div class="org">Ford Motor Company, Windsor</div></div><div class="when">May to Aug 2026</div></header>
+          <ul>
+            <li>Troubleshot PLC, HMI, robot, RFID and machine-vision faults on a live engine line with Siemens STEP 7, TIA Portal and Octoplant.</li>
+            <li>30+ hours of machine-vision analysis to separate true rejects, false rejects and false accepts, and tune inspection limits with rollback notes.</li>
+            <li>Built Python, Excel/VBA and Power BI tools for production-mix forecasting and scrap tracking.</li>
+          </ul>
+        </article>
+        <article class="xp rv">
+          <header><div><h3>Embedded Software and Controls</h3><div class="org">Lancer Motorsports (Formula SAE)</div></div><div class="when">Jan 2026 to present</div></header>
+          <ul>
+            <li>CAN and FDCAN messaging for inverter, BMS and dashboard traffic over MCP2515 and STM32 Nucleo H723ZG.</li>
+            <li>Configured multi-ADC throttle and brake acquisition with 12-bit conversion and circular DMA, resolving sampling conflicts.</li>
+            <li>Simulink VCU and driver-interface models built before committing to hardware.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="skills" data-theme="light">
+  <div class="wrap">
+    <div class="sec-head rv"><h2>Skills</h2></div>
+    <div class="skills rv">
+      <div class="skill"><h3>Digital design</h3><p>Verilog, SystemVerilog, Intel Quartus, ModelSim/Questa, Icarus Verilog, Verilator, Yosys, MAX 10 / DE10-Lite, FSMs, self-checking testbenches, SDC timing constraints</p></div>
+      <div class="skill"><h3>Embedded</h3><p>STM32 Nucleo H723ZG, ESP32-S3, Arduino Uno/Mega, Raspberry Pi/Pico, Jetson Orin NX, CAN/FDCAN, I2C, SPI, UART, ADC, DMA</p></div>
+      <div class="skill"><h3>Languages</h3><p>C, C++, Python, MATLAB, VBA, HTML, Bash. Spoken: English, French, Arabic, Spanish</p></div>
+      <div class="skill"><h3>Robotics</h3><p>ROS 2, MoveIt 2, URDF, RViz, MuJoCo, Simulink, ODrive S1, BLDC and encoder control, kinematics</p></div>
+      <div class="skill"><h3>Controls and automation</h3><p>PLC ladder logic, Siemens STEP 7, TIA Portal, HMIs, RFID, machine vision, interlocks, error proofing</p></div>
+      <div class="skill"><h3>ML and data</h3><p>TensorFlow, TensorFlow Lite Micro, int8 quantization, Power BI, Excel/VBA</p></div>
+      <div class="skill"><h3>Systems and security</h3><p>Ubuntu Server, Linux CLI, self-hosting, DNS, VPN, Kali Linux, Nmap, Wireshark, Metasploit</p></div>
+      <div class="skill"><h3>Mechanical</h3><p>AutoCAD, GD&amp;T (ASME Y14.5), electrical drawings, oscilloscopes, 3D printing</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band contact" id="contact" data-theme="dark">
+  <div class="wrap rv">
+    <h2>Let's build<br>something.</h2>
+    <a class="mail" href="mailto:naceri@uwindsor.ca">naceri@uwindsor.ca</a>
+    <div class="links">
+      <a class="btn" href="tel:+12262460994">(226) 246-0994</a>
+      <a class="btn" href="https://www.linkedin.com/in/abderrahmene-naceri" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/ANaceri26" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="Abderrahmene_Naceri_Project_Portfolio.pdf" download>PDF portfolio</a>
+    </div>
+  </div>
+  <footer><div class="wrap">Abderrahmene Naceri, Windsor, Ontario</div></footer>
+</section>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <div class="dlg">
+    <div class="dlg-top"><div><span class="status" id="dlg-status"><i></i><span></span></span><h3 id="dlg-title"></h3><p class="tag" id="dlg-tag"></p></div><button class="close" id="dlg-close" aria-label="Close">×</button></div>
+    <div class="dlg-scroll">
+      <div class="stage" id="stage"></div>
+      <p class="stage-cap" id="stage-cap"></p>
+      <div class="thumbs" id="thumbs"></div>
+      <div class="specs" id="dlg-specs"></div>
+      <div class="cols" id="dlg-cols"></div>
+      <p class="tools" id="dlg-tools" style="margin-top:20px;font-size:13.5px;color:#5b667a"></p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const HW=['', 'Running on hardware'], SIM=['sim','Verified in simulation'];
+const P=[
+ {id:'vga',cat:'fpga',big:1,st:HW,t:'VGA Timing Controller and Frame Buffer',
+  s:'A Verilog video pipeline that draws to a 640×480 monitor from on-chip block RAM.',
+  tools:'Verilog, Intel Quartus, ModelSim, Icarus Verilog, DE10-Lite (MAX 10)',
+  m:[{v:'media/vga.mp4',p:'media/vga.jpg',c:'Running on a DE10-Lite: test card, gradient and bouncing box.'},{i:'img/vga_test.jpg',c:'Test card: colour bars, grey ramp, 1-pixel white border.'},{i:'img/vga_grad.jpg',c:'Gradient scene.'},{i:'img/vga_box.jpg',c:'Bouncing box: 2 px right, 1 px down per frame.'},{i:'img/vga_board.jpg',c:'DE10-Lite driving the monitor over VGA.'}],
+  sp:[['640×480 @ 60 Hz','800×525 total, 25 MHz pixel enable'],['921,600 bits','dual-port block RAM'],['307,200 px','checked per frame'],['4 scenes','plus freeze mode']],
+  sec:[['Timing generator',['640/16/96/48 horizontal and 480/10/2/33 vertical timing, active-low sync.','25 MHz pixel enable from the 50 MHz clock: one clock domain.','Reset and two-flop switch synchronizers; SDC constraints.']],
+       ['Frame buffer',['320×240 RGB444 in M9K block RAM, upscaled 2×2.','Painter writes during vertical blanking, so frames never tear.','Shift-and-add addressing (320 = 256 + 64) instead of a multiplier.']],
+       ['Verification',['Sync pipelined to match the one-cycle RAM read latency.','Testbench acts as a monitor and checks all 307,200 visible pixels.','Six simulated frames (~5.8 M cycles) cover animation and freeze.']]]},
+ {id:'i2clink',cat:'fpga embedded',big:1,st:HW,t:'FPGA-to-Arduino I2C Link',
+  s:'My own I2C controller on a MAX 10 FPGA, trading bytes with an Arduino Uno across a 3.3 V to 5 V bus.',
+  tools:'SystemVerilog, C++ (Arduino), Intel Quartus, Python, DE10-Lite, Arduino Uno R3, BS170',
+  m:[{v:'media/i2c_link.mp4',p:'media/i2c_link.jpg',c:'Uploading the Uno firmware, then reading and writing bytes from the FPGA.'},{i:'img/i2c_overview.jpg',c:'DE10-Lite reading 042 from the Uno through the level shifter.'},{i:'img/i2c_042.jpg',c:'Received byte shown in decimal on the 7-segment displays.'},{i:'img/i2c_serial.jpg',c:'Uno serial monitor during transfers.'}],
+  sp:[['10 kHz','bus, Uno at 0x42'],['Every 5 s','one read or write'],['72 pins','fitted pinout checked'],['12% / 18%','Uno flash / RAM']],
+  sec:[['Scheduler',['START + address, one data byte, STOP, checking NACK, timeout and invalid commands at every stage.','Errors release the bus with STOP and flash LED8.','SW9 picks read/write; SW0–SW7 set the byte; 20 ms debounce.']],
+       ['Level shifting',['One BS170 per line, gate at 3.3 V, 10 kΩ pull-ups on each side.','FPGA IO14/IO15 (AB21/AA20) to Uno A4/A5, common ground.']],
+       ['Bring-up',['Wire onReceive/onRequest callbacks with atomic shared-state copies.','Found Quartus ignoring all 72 pin assignments due to QSF syntax and fixed it.','Python checker compares fitted pins to the intended pinout.']]]},
+ {id:'catdog',cat:'embedded',big:1,st:HW,t:'ESP32-S3 Edge AI Cat/Dog Classifier',
+  s:'MobileNetV2 trained on a laptop, quantized to int8 and running on a thumb-sized camera board.',
+  tools:'Python, TensorFlow, TensorFlow Lite Micro, C++, Seeed XIAO ESP32-S3 Sense',
+  m:[{v:'media/catdog.mp4',p:'media/catdog.jpg',c:'The board classifying dog and cat photos in real time.'},{i:'img/cd_d.jpg',c:'Pointed at a dog photo: "Dog".'},{i:'img/cd_c.jpg',c:'Pointed at a cat photo: "Cat".'},{i:'img/cd_a.jpg',c:'The phone-friendly page served by the board.'}],
+  sp:[['23,262','training images'],['96×96 int8','MobileNetV2, width 0.35'],['1 MB','PSRAM tensor arena'],['1.5 s','per prediction']],
+  sec:[['Training',['80/10/10 split with flip, rotation, zoom, brightness and contrast augmentation.','New head at 1e-3, then top 40 layers at 1e-5 with BatchNorm frozen.']],
+       ['Quantization',['Full int8 with a 300-image calibration set.','Accuracy re-checked with the int8 interpreter; exported as a C array in flash.']],
+       ['On device',['320×240 frame, center-crop, 96×96, TFLite Micro with ESP-NN.','Served over the board\'s own Wi-Fi; under 70% confidence reports "not sure".']]]},
+ {id:'finder',cat:'embedded',big:1,st:HW,t:'ESP32 Bluetooth and Wi-Fi Signal Finder',
+  s:'A handheld "metal detector" for wireless devices that beeps faster as you get closer and maps signal strength.',
+  tools:'C++, Python, NimBLE, UDP, JavaScript, Seeed XIAO ESP32-S3',
+  m:[{i:'img/ble_heat.jpg',c:'Walk-around heatmap built from the board\'s live Bluetooth scans.'},{v:'media/finder_ble.mp4',p:'media/finder_ble.jpg',c:'The XIAO board, a phone toggling Bluetooth, and the device list updating live.'},{i:'img/ble_list.jpg',c:'Devices heard by the board, strongest first.'},{i:'img/ble_finder_sim.png'.replace('.png','.jpg'),c:'Laptop app in simulation mode.'}],
+  sp:[['80','devices tracked'],['300 ms','UDP report interval'],['α = 0.3','RSSI smoothing'],['400 ms','single-channel Wi-Fi rescan']],
+  sec:[['Board',['Scans BLE advertisements and Wi-Fi beacons; 20 s stale-device expiry.','Buzzer rate and pitch rise with signal strength, even without the laptop.','BOOT button switches modes or locks onto the strongest signal.']],
+       ['Laptop app',['Standard-library Python: threaded HTTP server and browser UI.','Track a device and hear it get closer; click-to-record RSSI heatmap with CSV export.','Simulation mode for testing without hardware.']]]},
+ {id:'i2c',cat:'fpga',st:SIM,t:'I2C Controller and C Driver',
+  s:'The reusable controller core behind the Arduino link, with a bare-metal C driver tested against the RTL.',
+  tools:'SystemVerilog, C11, Verilator, Icarus Verilog, Yosys, Python',
+  m:[{i:'img/wave_i2c.png'.replace('.png','.jpg'),c:'Simulation trace: address 0x50 + 3 data bytes, interrupt after each byte.'}],
+  sp:[['18-state','FSM'],['9,010','commands per seed'],['1,600 B','C/RTL co-sim payload'],['0','failures']],
+  sec:[['RTL',['START, repeated START, STOP, ACK/NACK, clock stretching, programmable divider.','Two-flop input synchronizers, watchdog timeout, sticky status and IRQ.']],
+       ['Driver',['C11 HAL with volatile-pointer MMIO.','Offset-based I/O layer runs the same driver on hardware or Verilated RTL.']],
+       ['Verification',['1,000 random transactions per seed across 2 seeds.','Strict Verilator lint and Yosys synthesis pass.']]]},
+ {id:'dma',cat:'fpga',st:SIM,t:'DMA Controller and Round-Robin Arbiter',
+  s:'A 32-bit memory-copy engine that shares one memory port fairly with a CPU.',
+  tools:'SystemVerilog, C11, Verilator, Icarus Verilog, Yosys',
+  m:[{i:'img/wave_dma.png'.replace('.png','.jpg'),c:'CPU stand-in and DMA alternating beats on the shared port.'}],
+  sp:[['1–16','word bursts'],['260,000+','contended bus beats'],['500','C co-sim copies'],['64 words','board self-test']],
+  sec:[['Engine',['Memory-mapped CSRs, completed-word counter, IRQ, error and timeout reporting.','Rejects misaligned, overlapping and overflowing copies in hardware.']],
+       ['Arbiter',['Beat-level round robin that holds a grant across stalls.','Request data stays stable under backpressure.']],
+       ['Verification',['1,000 random copies per seed; 1, 8 and 16-word bursts.','C driver co-simulated against Verilated RTL.']]]},
+ {id:'adder',cat:'fpga',st:HW,t:'4-Bit Ripple-Carry and Carry-Lookahead Adders',
+  s:'Two adder architectures written gate by gate, with the ripple-carry design on a DE10-Lite.',
+  tools:'Verilog, Intel Quartus, Questa, DE10-Lite (MAX 10)',
+  m:[{v:'media/adder_fpga.mp4',p:'media/adder_fpga.jpg',c:'Adding with the switches; binary and decimal display modes.'},{i:'img/rca_c.jpg',c:'1111 + 1111 + carry-in = 11111 (31).'},{i:'img/rca_pinplanner.jpg',c:'Quartus Pin Planner.'}],
+  sp:[['4-bit','A + B + Cin'],['0–31','decimal readout'],['C1–C4','lookahead carries']],
+  sec:[['Logic',['RCA from chained half-adder stages.','CLA carries expanded into generate/propagate terms of A, B and C0 only.']],
+       ['Board',['SW0–SW8 inputs, sum and carry on LEDR0–LEDR4.','SW9 toggles binary or decimal 7-segment output.']]]},
+ {id:'solar',cat:'mech embedded',st:['none',''],t:'Solar-Powered Vehicle',
+  s:'A two-motor rear-wheel-drive prototype charged from two solar panels.',
+  tools:'DC motors, dual H-bridge, solar charge controller, batteries, Arduino Uno',
+  m:[{i:'img/solar_chassis.jpg',c:'Chassis with steering servo, driver and Uno.'},{i:'img/solar_ir.jpg',c:'Bench test: IR remote commands decoded on the Uno.'}],
+  sec:[['Build',['Both motors bench-tested through a dual H-bridge before permanent wiring.','Two panels through a charge controller; output checked under flashlight and sunlight.','Soldered power and control wiring with dual-battery integration.']]]},
+ {id:'server',cat:'soft',st:['',' Running at home'],t:'Home Server and Personal Cloud',
+  s:'A Raspberry Pi that hosts my media, my files, network-wide ad blocking and a VPN.',
+  tools:'Linux, Raspberry Pi, Ubuntu Server, Bash, DNS, VPN, Plex',
+  m:[{i:'img/homeserver.jpg',c:'The Pi with its storage drive.'}],
+  sec:[['Services',['Plex streaming for movies and music.','Personal cloud storage replacing a paid plan.','Pi as the LAN DNS server with a static IP, blocking ads for every device.','Self-hosted VPN for secure access from anywhere.']]]},
+ {id:'fert',cat:'mech embedded',st:['comp','Competition finalist'],t:'Autonomous Fertilizer Robot',
+  s:'A robot car that follows a course, avoids obstacles and drops fertilizer.',
+  tools:'C++, Arduino Uno (ATmega328P), ultrasonic and line sensors, AutoCAD, LEGO',
+  m:[{i:'img/fert_course.jpg',c:'Robot with its dispenser.'},{i:'img/fert_test.jpg',c:'Test run before the competition.'},{i:'img/fert_lego.jpg',c:'LEGO dispenser design.'}],
+  sp:[['< 40 s','course time'],['$32.45','build cost'],['Finals','result']],
+  sec:[['Design',['Line tracking plus ultrasonic obstacle avoidance.','Code tightened for the ATmega328P\'s memory.','Modular LEGO dispenser; AutoCAD for weight balance.']]]},
+ {id:'ih',cat:'soft',st:['comp','Ontario Engineering Competition'],t:'Interstellar Highway',
+  s:'An interplanetary trade-route planner and animated simulator built for the Ontario Engineering Competition.',
+  tools:'Python, JSON, orbital mechanics',
+  m:[{i:'img/ih_trade.jpg',c:'Trade simulation: Neptune to Earth with a 600 kg payload.'},{i:'img/ih_title.jpg',c:'Title screen.'},{i:'img/oec_team.jpg',c:'Our team at the competition.'}],
+  sp:[['10','celestial bodies'],['7','ship classes'],['83%','trajectory accuracy']],
+  sec:[['Planner',['Lambert\'s problem solvers for transfer orbits.','Tsiolkovsky rocket equation for delta-v and fuel, optimizing launch windows and payload.','Routes ranked and returned as JSON with escape/insertion vectors.']],
+       ['Competition',['Control simulations timing thruster "actuators".','Power budgets optimized under strict constraints.']]]},
+ {id:'sim',cat:'mech',st:['none',''],t:'Dynamic Systems Simulation',
+  s:'Second-order systems in Simulink, checked against the hand-solved steady state.',
+  tools:'MATLAB, Simulink',
+  m:[{i:'img/sim_model.jpg',c:'Integrator and feedback model of y\'\' + 6y\' + 4y = 2.'},{i:'img/sim_scope.jpg',c:'Settling to y = 0.5.'}],
+  sec:[['Method',['Equation built from integrator blocks and feedback loops.','Tuned damping and gains; simulated steady state matched the analytical 0.5.']]]},
+ {id:'cad',cat:'mech',st:['none',''],t:'Mechanical Assembly Design',
+  s:'A full drawing set for a 1020 steel bracket assembly to ASME Y14.5.',
+  tools:'AutoCAD, GD&T',
+  m:[{i:'img/cad_assembly.jpg',c:'Complete assembly with BOM.'},{i:'img/cad_section.jpg',c:'Section view.'}],
+  sec:[['Drawings',['Orthographic, isometric and section views with a bill of materials.','Toleranced with GD&T for fit and manufacturability.']]]},
+ {id:'cyber',cat:'soft',st:['comp','3rd place, Ontario'],t:'ICTC CyberTitan',
+  s:'Keep a simulated lunar base running while it is under cyberattack.',
+  tools:'Windows Server, Remote Desktop, Wireshark, WinPcap, firewall rules',
+  m:[{i:'img/cyber_team.jpg',c:'Hardening systems during the competition.'},{i:'img/cyber_room.jpg',c:''},{i:'img/cyber_laptop.jpg',c:''}],
+  sp:[['3rd','province-wide'],['15+','vulnerabilities fixed']],
+  sec:[['What we did',['Audited system logs and firewall rules under time pressure.','Reviewed Local Security Policy to reduce attack surface.']]]},
+ {id:'lab',cat:'soft',text:1,st:['none',''],t:'HomeLab Security Research',s:'Kali/Ubuntu VMs for sandboxed testing; Nmap, Wireshark and Metasploit to find and fix misconfigurations in legacy routing hardware.',tools:'Kali Linux, Nmap, Wireshark, Metasploit'},
+ {id:'login',cat:'soft',text:1,st:['none',''],t:'Secure Login System',s:'SHA-256 password hashing, CSV user storage and a 30-second lockout after 3 failed attempts, with a themed Tkinter GUI.',tools:'Python, Tkinter, hashlib'},
+ {id:'grades',cat:'soft',text:1,st:['none',''],t:'Automatic Grades Calculator',s:'VBA macros that compute weighted grades and build a worksheet per class from imported student data.',tools:'Excel, VBA'},
+];
+
+const grid=document.getElementById('grid');
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const statusHTML=st=>`<span class="status ${st[0]}"><i></i><span>${esc(st[1].trim())}</span></span>`;
+P.forEach(p=>{
+  const b=document.createElement('button');
+  b.className='card rv'+(p.big?' big':'')+(p.text?' text':''); b.dataset.cat=p.cat; b.type='button';
+  b.setAttribute('aria-label',p.t+': open details');
+  let media='';
+  if(!p.text){const m=p.m[0];
+    media=m.v?`<div class="media"><video data-src="${m.v}" poster="${m.p}" muted loop playsinline preload="none" data-auto></video><span class="play">Video</span></div>`
+             :`<div class="media"><img src="${m.i}" alt="" loading="lazy"></div>`;}
+  b.innerHTML=media+`<div class="body">${statusHTML(p.st)}<h3>${esc(p.t)}</h3><p>${esc(p.s)}</p><div class="tools">${esc(p.tools)}</div></div>`;
+  if(!p.text) b.addEventListener('click',()=>openP(p)); else b.style.cursor='default';
+  grid.appendChild(b);
+});
+
+/* filters */
+document.querySelectorAll('.filters button').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===btn));
+  const f=btn.dataset.f;
+  grid.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',f!=='all'&&!c.dataset.cat.split(' ').includes(f)));
+}));
+
+/* dialog */
+const dlg=document.getElementById('dlg'),stage=document.getElementById('stage'),thumbs=document.getElementById('thumbs');
+function show(p,i){
+  const m=p.m[i];
+  stage.innerHTML=m.v?`<video src="${m.v}" poster="${m.p}" controls autoplay muted loop playsinline></video>`:`<img src="${m.i}" alt="${esc(m.c||p.t)}">`;
+  document.getElementById('stage-cap').textContent=m.c||'';
+  thumbs.querySelectorAll('button').forEach((t,j)=>t.setAttribute('aria-current',j===i));
+}
+function openP(p){
+  const s=document.getElementById('dlg-status'); s.className='status '+p.st[0]; s.querySelector('span').textContent=p.st[1].trim();
+  document.getElementById('dlg-title').textContent=p.t; document.getElementById('dlg-tag').textContent=p.s;
+  thumbs.innerHTML=p.m.length>1?p.m.map((m,i)=>`<button aria-label="Show item ${i+1}"><img src="${m.v?m.p:m.i}" alt=""></button>`).join(''):'';
+  thumbs.querySelectorAll('button').forEach((t,i)=>t.onclick=()=>show(p,i));
+  document.getElementById('dlg-specs').innerHTML=(p.sp||[]).map(x=>`<div><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join('');
+  document.getElementById('dlg-specs').style.display=p.sp?'grid':'none';
+  document.getElementById('dlg-cols').innerHTML=(p.sec||[]).map(x=>`<div><h4>${esc(x[0])}</h4><ul>${x[1].map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`).join('');
+  document.getElementById('dlg-tools').textContent='Tools: '+p.tools;
+  show(p,0); dlg.showModal(); document.querySelector('.dlg-scroll').scrollTop=0;
+}
+document.getElementById('dlg-close').onclick=()=>dlg.close();
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+dlg.addEventListener('close',()=>{stage.innerHTML=''});
+
+/* theme transitions, reveals, lazy video */
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const themeObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.body.dataset.theme=e.target.dataset.theme}),{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('[data-theme]:not(body)').forEach(s=>themeObs.observe(s));
+const rvObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rvObs.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+const vObs=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;
+  if(e.isIntersecting){if(!v.src)v.src=v.dataset.src; if(!reduce)v.play().catch(()=>{})} else v.pause();}),{threshold:.35});
+document.querySelectorAll('video[data-src]').forEach(v=>vObs.observe(v));
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30),{passive:true});
+
+/* oscilloscope */
+const W={"scl":{"init":1,"edges":[[0.03615,0],[0.04692,1],[0.06077,0],[0.07154,1],[0.08538,0],[0.09615,1],[0.11,0],[0.12077,1],[0.13462,0],[0.14538,1],[0.15923,0],[0.17,1],[0.18385,0],[0.19462,1],[0.20846,0],[0.21923,1],[0.23308,0],[0.24385,1],[0.25769,0],[0.27462,1],[0.28846,0],[0.29923,1],[0.31308,0],[0.32385,1],[0.33769,0],[0.34846,1],[0.36231,0],[0.37308,1],[0.38692,0],[0.39769,1],[0.41154,0],[0.42231,1],[0.43615,0],[0.44692,1],[0.46077,0],[0.47154,1],[0.48538,0],[0.50231,1],[0.51615,0],[0.52692,1],[0.54077,0],[0.55154,1],[0.56538,0],[0.57615,1],[0.59,0],[0.60077,1],[0.61462,0],[0.62538,1],[0.63923,0],[0.65,1],[0.66385,0],[0.67462,1],[0.68846,0],[0.69923,1],[0.71308,0],[0.73,1],[0.74385,0],[0.75462,1],[0.76846,0],[0.77923,1],[0.79308,0],[0.80385,1],[0.81769,0],[0.82846,1],[0.84231,0],[0.85308,1],[0.86692,0],[0.87769,1],[0.89154,0],[0.90231,1],[0.91615,0],[0.92692,1],[0.94077,0],[0.95154,1]]},"sda":{"init":1,"edges":[[0.02692,0],[0.03769,1],[0.06231,0],[0.08692,1],[0.11154,0],[0.25923,1],[0.26538,0],[0.31462,1],[0.38846,0],[0.48692,1],[0.51769,0],[0.61615,1],[0.66538,0],[0.71462,1],[0.72077,0],[0.74538,1],[0.77,0],[0.79462,1],[0.86846,0],[0.96538,1]]}};
+const LABELS=[[0.0277,'START'],[0.145,'0x50 W'],[0.375,'0x38'],[0.603,'0x86'],[0.84,'0x5C'],[0.967,'STOP']];
+const BOUNDS=[0.0277,0.2615,0.489,0.7177,0.967];
+const cv=document.getElementById('scope'),cx=cv.getContext('2d');
+function lvl(sig,x){let v=W[sig].init;for(const [t,b] of W[sig].edges){if(t>x)break;v=b}return v}
+function draw(prog){
+  const dpr=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;
+  if(cv.width!==w*dpr){cv.width=w*dpr;cv.height=h*dpr}
+  cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,w,h);
+  const L=48,R=w-4,span=R-L,rows=[['SCL',h*.28],['SDA',h*.66]],amp=h*.2;
+  cx.font='600 12px Inter,system-ui';cx.textBaseline='middle';
+  cx.strokeStyle='rgba(143,176,255,.14)';cx.lineWidth=1;
+  BOUNDS.forEach(b=>{const x=L+b*span;cx.setLineDash([3,5]);cx.beginPath();cx.moveTo(x,6);cx.lineTo(x,h-4);cx.stroke()});cx.setLineDash([]);
+  rows.forEach(([name,y])=>{
+    cx.fillStyle='#8e9bb8';cx.fillText(name,0,y);
+    const end=prog;cx.beginPath();cx.strokeStyle=name==='SCL'?'#8fb0ff':'#ffffff';cx.lineWidth=2;
+    let v=W[name.toLowerCase()].init;cx.moveTo(L,y+(v?-amp/2:amp/2));
+    for(const [t,b] of W[name.toLowerCase()].edges){if(t>end)break;const x=L+t*span;cx.lineTo(x,y+(v?-amp/2:amp/2));cx.lineTo(x,y+(b?-amp/2:amp/2));v=b}
+    cx.lineTo(L+end*span,y+(v?-amp/2:amp/2));cx.stroke();
+  });
+  cx.textAlign='center';
+  LABELS.forEach(([x,t])=>{if(w<640&&(t==='START'||t==='STOP'))return;if(x<=prog){cx.fillStyle=t==='START'||t==='STOP'?'#ff7a5c':'#c6d0e4';cx.fillText(t,L+x*span,h*.06+4)}});
+  cx.textAlign='left';
+  if(prog<1){const x=L+prog*span;cx.strokeStyle='rgba(255,77,46,.9)';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(x,10);cx.lineTo(x,h-4);cx.stroke()}
+}
+if(reduce){draw(1);addEventListener('resize',()=>draw(1))}
+else{let t0=null;const dur=5200,hold=2600;
+  function loop(ts){if(t0===null)t0=ts;const e=(ts-t0)%(dur+hold);draw(Math.min(1,e/dur));requestAnimationFrame(loop)}
+  requestAnimationFrame(loop)}
+</script>
+</body>
+</html>
