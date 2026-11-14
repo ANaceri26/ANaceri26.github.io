@@ -3,408 +3,410 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Abderrahmene Naceri | Robotics, Embedded and FPGA</title>
-<meta name="description" content="Electrical engineering student at the University of Windsor: rover arm controls, Formula SAE embedded software, FPGA and embedded projects.">
+<title>Abderrahmene Naceri | Electrical Engineering, Robotics and Embedded Systems</title>
+<meta name="description" content="Abderrahmene Naceri, Electrical Engineering co-op student at the University of Windsor. Controls at Ford, 5-DOF robotic arm lead on the UWindsor Rover Team, embedded software for Formula SAE, FPGA and embedded projects.">
+<meta property="og:title" content="Abderrahmene Naceri | Robotics, Embedded and Controls">
+<meta property="og:description" content="Controls co-op at Ford, Rover arm lead, Formula SAE embedded software, FPGA and embedded projects.">
+<meta property="og:image" content="media/rover_full.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e1116'/%3E%3Ctext x='16' y='21.5' font-family='Arial' font-weight='700' font-size='14' fill='%23fff' text-anchor='middle'%3EAN%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --night:#0f1318; --paper:#f5f4f0; --white:#ffffff;
-  --blue:#2f66d0; --blue-soft:#93b1ec;
-  --led:#e5482c; --sim:#3f7fe8; --wip:#d39a2e;
-  --ease:cubic-bezier(.2,.7,.2,1);
-  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --bg:#f6f6f3; --card:#ffffff; --ink:#0e1116; --ink2:#2a2f37; --mut:#5d6470; --dim:#8a909a;
+  --line:#e3e3de; --line2:#d3d3cc; --acc:#2047f5; --acc-soft:#e8ecff; --ok:#16a34a; --sim:#2563eb; --comp:#d97706;
+  --dark:#0e1116; --dark2:#161a21; --dline:#262b34;
+  --sans:"Geist","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --e:cubic-bezier(.2,.75,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--night);color:#e4e7ec;
-  transition:background-color .8s var(--ease),color .8s var(--ease);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-body[data-theme=light]{background:var(--paper);color:#161a21}
-[data-theme=dark]{--fg:#e4e7ec;--mut:#98a1b0;--rule:#262d38;--panel:#151a21}
-[data-theme=light]{--fg:#161a21;--mut:#5c6370;--rule:#dad8d1;--panel:#ffffff}
-section,header.hero{color:var(--fg)}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img,video{display:block;max-width:100%}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px}
-.wrap{max-width:1120px;margin:0 auto;padding:0 32px}
-h1,h2,h3,h4{font-weight:600;letter-spacing:-.01em;line-height:1.2}
-.label{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
+::selection{background:var(--acc);color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.num{font-variant-numeric:tabular-nums}
 
 /* nav */
-.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background-color .5s,backdrop-filter .5s,box-shadow .5s}
-.nav.scrolled{background:color-mix(in srgb,var(--night) 86%,transparent);backdrop-filter:blur(10px);box-shadow:0 1px 0 #262d38}
-body[data-theme=light] .nav.scrolled{background:color-mix(in srgb,var(--paper) 88%,transparent);box-shadow:0 1px 0 #dad8d1}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-.nav .mark{font-weight:600;text-decoration:none;font-size:15px}
-.nav .short{display:none}
-.nav ul{list-style:none;display:flex;gap:24px;font-size:14px}
-.nav ul a{text-decoration:none;opacity:.72;transition:opacity .2s}
-.nav ul a:hover{opacity:1}
+.nav{position:fixed;inset:0 0 auto;z-index:50;transition:background-color .3s,box-shadow .3s}
+.nav.on{background:rgba(246,246,243,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);box-shadow:0 1px 0 var(--line)}
+.nav .wrap{height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:15px;white-space:nowrap}
+.mark b{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--ink);color:#fff;font-size:12px;letter-spacing:.02em}
+.nav ul{list-style:none;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav ul a{display:block;padding:7px 12px;border-radius:8px;font-size:14px;color:var(--mut);text-decoration:none;transition:color .2s,background-color .2s;white-space:nowrap}
+.nav ul a:hover{color:var(--ink);background:rgba(14,17,22,.05)}
+.nav ul a.act{color:var(--ink);background:rgba(14,17,22,.07)}
+.nav .cv{padding:8px 14px;border-radius:9px;background:var(--ink);color:#fff;font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap;transition:background-color .2s}
+.nav .cv:hover{background:var(--acc)}
+#prog{position:absolute;left:0;bottom:0;height:2px;background:var(--acc);width:100%;transform-origin:0 50%;transform:scaleX(0)}
 
 /* hero */
-.hero{padding:148px 0 72px;position:relative;overflow:hidden}
-.hero h1{font-size:clamp(34px,5vw,54px);color:#fff;margin-top:14px}
-.hero .lede{max-width:600px;font-size:18px;margin-top:16px;color:#b9c0cc;line-height:1.6}
-.now{display:grid;grid-template-columns:repeat(3,1fr);margin-top:36px;border-top:1px solid #262d38}
-.now a{display:block;padding:14px 20px 14px 0;text-decoration:none;transition:color .25s}
-.now a+a{padding-left:20px;border-left:1px solid #262d38}
-.now b{display:block;font-weight:500;font-size:15px;color:#fff;transition:color .25s}
-.now span{font-size:13.5px;color:#98a1b0}
-.now a:hover b{color:var(--blue-soft)}
-.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:4px;font-weight:500;font-size:14px;text-decoration:none;border:1px solid var(--rule);transition:background-color .25s,border-color .25s,transform .25s var(--ease)}
-.btn:hover{transform:translateY(-1px);border-color:var(--blue-soft)}
-.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
-.btn.primary:hover{background:#3b73dd}
-.scope{margin-top:56px;position:relative}
-.scope canvas{width:100%;height:150px;display:block}
-.scope .cap{font-family:var(--mono);font-size:12px;color:#7f8898;margin-top:8px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.scope .cap b{color:#b9c0cc;font-weight:500}
+.hero{padding:132px 0 56px}
+.hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.status{display:inline-flex;align-items:center;gap:9px;padding:6px 12px 6px 10px;border:1px solid var(--line2);border-radius:999px;font-size:13.5px;color:var(--ink2);background:var(--card)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(22,163,74,.5);animation:ping 2.2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(22,163,74,.45)}70%{box-shadow:0 0 0 8px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+.hero h1{font-weight:600;font-size:clamp(42px,5.6vw,76px);line-height:1;letter-spacing:-.035em;margin:22px 0 22px}
+.hero h1 span{display:block;color:var(--mut);font-size:.42em;letter-spacing:-.015em;line-height:1.2;margin-top:16px;font-weight:500}
+.hero .lede{font-size:clamp(17px,1.6vw,19.5px);color:var(--ink2);max-width:600px;line-height:1.55}
+.hero .lede b{font-weight:600;color:var(--ink)}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;border:1px solid var(--line2);background:var(--card);transition:transform .2s var(--e),border-color .2s,background-color .2s,color .2s}
+.btn:hover{transform:translateY(-1px);border-color:var(--ink)}
+.btn.pri{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.pri:hover{background:var(--acc);border-color:var(--acc)}
+.btn svg{width:16px;height:16px}
+.facts{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:30px;font-size:14px;color:var(--mut)}
+.facts span{display:flex;align-items:center;gap:7px}
+.facts svg{width:15px;height:15px;color:var(--dim)}
+.mosaic{display:grid;grid-template-columns:1.05fr 1fr;grid-template-rows:1fr 1fr;gap:12px;height:min(560px,62vh);min-height:420px}
+.tile{position:relative;border-radius:16px;overflow:hidden;background:#dcdcd6;box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px -18px rgba(0,0,0,.25)}
+.tile.tall{grid-row:span 2}
+.tile video,.tile img{width:100%;height:100%;object-fit:cover}
+.tile .cap{position:absolute;left:10px;bottom:10px;right:10px;display:flex;justify-content:space-between;align-items:flex-end;gap:8px}
+.tile .cap span{font-size:12.5px;font-weight:500;color:#fff;background:rgba(14,17,22,.62);backdrop-filter:blur(6px);padding:5px 9px;border-radius:7px;line-height:1.3}
+.tile .cap a{font-size:12px;color:#fff;text-decoration:none;background:rgba(14,17,22,.62);padding:5px 8px;border-radius:7px;white-space:nowrap}
+
+/* impact */
+.impact{padding:20px 0 40px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.kpi{padding:24px 24px 22px;border-left:1px solid var(--line);position:relative}
+.kpi:first-child{border-left:0}
+.kpi .v{font-size:clamp(28px,3vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1.05}
+.kpi .v small{font-size:.5em;color:var(--mut);font-weight:500;letter-spacing:0}
+.kpi .l{font-size:14px;color:var(--ink2);margin-top:8px;line-height:1.4}
+.kpi .s{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:10px}
+.bar{height:6px;border-radius:3px;background:#eceae4;margin-top:14px;position:relative;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.bar .b0{background:#c9c9c2;width:47.2%}
+.bar .b1{background:var(--acc);width:0;transition:width 1.6s var(--e) .2s}
+.kpis.in .bar .b1{width:86.3%}
 
 /* sections */
-section.band{padding:104px 0}
-.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:32px;padding-bottom:18px;border-bottom:1px solid var(--rule)}
-.sec-head h2{font-size:clamp(26px,3vw,34px);margin-top:6px}
-.sec-head p{max-width:480px;color:var(--mut);font-size:15px}
-.sec-head p.label{font-size:12px}
-
-/* featured team work */
-.feat{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:64px;align-items:start}
-.feat.flip{grid-template-columns:1fr minmax(260px,340px)}
-.feat.flip .feat-media{order:2}
-.feat-media{position:sticky;top:88px}
-.feat-media video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:6px;background:#0a0d11;cursor:pointer}
-.feat-media img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:6px;cursor:pointer}
-.feat-media figcaption{font-size:13px;color:var(--mut);margin-top:10px;line-height:1.45}
-.feat-body h2{font-size:clamp(28px,3.4vw,38px);margin-top:8px}
-.role{font-size:15px;color:var(--mut);margin-top:6px}
-.role b{color:var(--fg);font-weight:500}
-.intro{font-size:17px;margin-top:20px;max-width:640px}
-.facts{display:grid;grid-template-columns:repeat(4,1fr);margin:28px 0;border-top:1px solid var(--fg);border-bottom:1px solid var(--rule)}
-.facts div{padding:12px 14px 12px 0}
-.facts div+div{border-left:1px solid var(--rule);padding-left:14px}
-.facts b{display:block;font-weight:600;font-size:16px}
-.facts span{font-size:12.5px;color:var(--mut);line-height:1.4;display:block;margin-top:2px}
-.pts{list-style:none;display:grid;gap:10px;font-size:15px;max-width:680px}
-.pts li{padding-left:18px;position:relative}
-.pts li::before{content:"";position:absolute;left:0;top:.72em;width:7px;height:1px;background:var(--mut)}
-.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:32px}
-.gallery button{all:unset;cursor:pointer;display:block;position:relative;border-radius:4px;overflow:hidden;aspect-ratio:1;background:var(--rule)}
-.gallery button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease),opacity .3s}
-.gallery button:hover img{transform:scale(1.05)}
-.gallery .vtag{position:absolute;left:8px;bottom:8px;font-family:var(--mono);font-size:11px;color:#fff;background:rgba(10,13,17,.72);padding:2px 7px;border-radius:3px}
-.more{font:inherit;font-size:14px;font-weight:500;margin-top:16px;background:none;border:none;color:var(--blue);cursor:pointer;padding:0;border-bottom:1px solid currentColor}
-[data-theme=dark] .more{color:var(--blue-soft)}
-
-/* filters */
-.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
-.filters button{font:inherit;font-size:13.5px;font-weight:500;padding:6px 12px;border-radius:4px;border:1px solid var(--rule);background:transparent;color:inherit;cursor:pointer;transition:background-color .25s,color .25s,border-color .25s}
-.filters button[aria-pressed=true]{background:var(--fg);color:var(--paper);border-color:var(--fg)}
-.filters button:hover{border-color:var(--fg)}
-
-/* project grid */
-.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
-.card{grid-column:span 2;background:var(--white);border-radius:6px;overflow:hidden;border:1px solid var(--rule);cursor:pointer;display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;padding:0;
-  transition:transform .45s var(--ease),box-shadow .45s var(--ease),opacity .4s;}
-.card:hover{transform:translateY(-3px);box-shadow:0 14px 32px -22px rgba(22,26,33,.4)}
-.card.big{grid-column:span 3}
-.card.hide{display:none}
-.card .media{aspect-ratio:16/10;background:#e3e1db;position:relative;overflow:hidden}
-.card .media img,.card .media video{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
-.card:hover .media img,.card:hover .media video{transform:scale(1.04)}
-.card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
-.card h3{font-size:17px}
-.card.big h3{font-size:19px}
-.card p{font-size:14px;color:var(--mut);line-height:1.5}
-.card .tools{font-family:var(--mono);font-size:11.5px;color:#7a808b;margin-top:auto;padding-top:8px;line-height:1.5}
-.card.text{background:transparent;border-style:dashed}
-.card.text .body{padding:20px}
-.status{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--mut);letter-spacing:.02em}
-.status i{width:7px;height:7px;border-radius:50%;background:var(--led);box-shadow:0 0 0 3px color-mix(in srgb,var(--led) 20%,transparent)}
-.status.sim i{background:var(--sim);box-shadow:0 0 0 3px color-mix(in srgb,var(--sim) 20%,transparent)}
-.status.comp i{background:var(--wip);box-shadow:0 0 0 3px color-mix(in srgb,var(--wip) 22%,transparent)}
-.status.none{display:none}
-.play{position:absolute;right:10px;bottom:10px;font-family:var(--mono);font-size:11px;color:#fff;background:rgba(10,13,17,.72);padding:3px 8px;border-radius:3px}
-
-/* dialog */
-dialog{border:none;padding:0;border-radius:8px;width:min(1020px,94vw);max-height:92vh;margin:auto;background:var(--white);color:#161a21;box-shadow:0 40px 80px -30px rgba(0,0,0,.5)}
-dialog::backdrop{background:rgba(8,10,14,.68);backdrop-filter:blur(3px)}
-dialog[open]{animation:pop .45s var(--ease)}
-@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
-.dlg{display:flex;flex-direction:column;max-height:92vh}
-.dlg-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:24px 28px 14px}
-.dlg-top h3{font-size:clamp(21px,2.4vw,27px);margin-top:4px}
-.dlg-top .tag{font-size:15px;color:#5c6370;margin-top:6px;max-width:700px}
-.close{font:inherit;font-size:20px;line-height:1;width:36px;height:36px;border-radius:4px;border:1px solid #dad8d1;background:#fff;cursor:pointer;flex:none}
-.dlg-scroll{overflow:auto;padding:0 28px 28px}
-.stage{border-radius:4px;overflow:hidden;background:#0d1015;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
-.stage img,.stage video{width:100%;height:100%;object-fit:contain}
-.stage-cap{font-size:13.5px;color:#5c6370;margin:8px 0 0}
-.thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
-.thumbs button{flex:none;width:84px;height:58px;border-radius:3px;overflow:hidden;border:2px solid transparent;padding:0;cursor:pointer;background:#ddd;opacity:.6;transition:opacity .2s,border-color .2s}
-.thumbs button[aria-current=true]{border-color:var(--blue);opacity:1}
-.thumbs img{width:100%;height:100%;object-fit:cover}
-.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid #161a21;border-bottom:1px solid #dad8d1;margin:22px 0}
-.specs div{padding:10px 14px 10px 0}
-.specs div+div{border-left:1px solid #dad8d1;padding-left:14px}
-.specs b{display:block;font-size:17px;font-weight:600;color:var(--blue)}
-.specs span{font-size:12.5px;color:#5c6370}
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
-.cols h4{font-family:var(--mono);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:#5c6370;margin-bottom:8px}
-.cols ul{padding-left:18px;font-size:14.5px;color:#2a303b}
-.cols li{margin:4px 0}
+section{padding:96px 0}
+.sh{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:end;margin-bottom:44px}
+.sh h2{font-weight:600;font-size:clamp(32px,4vw,52px);letter-spacing:-.03em;line-height:1.05;margin-top:12px}
+.sh p{color:var(--mut);font-size:16.5px;max-width:520px;justify-self:end}
 
 /* experience */
-.xp{border-top:1px solid var(--rule);padding:26px 0 0;display:grid;grid-template-columns:260px 1fr;gap:32px}
-.xp h3{font-size:19px}
-.xp .org{color:var(--blue-soft);font-weight:500;font-size:15px;margin-top:4px}
-.xp .when{color:var(--mut);font-size:13px;margin-top:8px;font-family:var(--mono)}
-.xp ul{list-style:none;display:grid;gap:10px;align-content:start;font-size:15px;color:#c6ccd6}
-.xp li{padding-left:18px;position:relative}
-.xp li::before{content:"";position:absolute;left:0;top:.72em;width:7px;height:1px;background:var(--mut)}
-.subvids{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.xp{display:grid;gap:18px}
+.job{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;display:grid;grid-template-columns:240px 1fr;gap:36px}
+.job .meta .logo{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;font-weight:700;font-size:15px;color:#fff;margin-bottom:16px}
+.job .meta .dt{font-family:var(--mono);font-size:12px;color:var(--mut)}
+.job .meta .org{font-weight:600;font-size:15px;margin-top:6px}
+.job .meta .loc{font-size:13.5px;color:var(--mut)}
+.job .meta .tag{display:inline-block;margin-top:12px;font-size:12px;padding:3px 9px;border-radius:999px;background:var(--acc-soft);color:var(--acc);font-weight:500}
+.job>*{min-width:0}
+.job h3{font-weight:600;font-size:clamp(21px,2.2vw,26px);letter-spacing:-.02em;line-height:1.2}
+.job .sum{color:var(--ink2);margin-top:8px;font-size:15.5px}
+.res{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+.res div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+.res b{display:block;font-size:20px;font-weight:600;letter-spacing:-.02em;line-height:1.15}
+.res span{display:block;font-size:12.5px;color:var(--mut);margin-top:4px;line-height:1.35}
+.pts{list-style:none;display:grid;gap:9px}
+.pts li{position:relative;padding-left:18px;font-size:15px;color:var(--ink2)}
+.pts li:before{content:"";position:absolute;left:2px;top:10px;width:6px;height:6px;border-radius:2px;background:var(--acc)}
+.pts li b{color:var(--ink);font-weight:600}
+.more-pts{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--e)}
+.more-pts>ul{overflow:hidden}
+.job.open .more-pts{grid-template-rows:1fr}
+.more-pts .pts{padding-top:9px}
+.toggle{margin-top:12px;font-size:14px;font-weight:500;color:var(--acc);display:inline-flex;align-items:center;gap:6px}
+.toggle svg{width:14px;height:14px;transition:transform .35s var(--e)}
+.job.open .toggle svg{transform:rotate(180deg)}
+.strip{display:flex;gap:10px;margin-top:22px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.strip button{flex:0 0 150px;height:112px;border-radius:10px;overflow:hidden;position:relative;scroll-snap-align:start;background:#ddd;border:1px solid var(--line)}
+.strip img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--e)}
+.strip button:hover img{transform:scale(1.06)}
+.strip .pl{position:absolute;left:7px;bottom:7px;width:24px;height:24px;border-radius:50%;background:rgba(14,17,22,.7);display:grid;place-items:center}
+.strip .pl:after{content:"";border-left:7px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px}
+.also{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.also .job{grid-template-columns:1fr;gap:12px;padding:24px}
+.also .job .meta{display:flex;align-items:center;gap:14px}
+.also .job .meta .logo{margin:0;flex:none}
+.also .res{grid-template-columns:repeat(3,1fr);margin:12px 0 14px}
 
-/* skills */
-.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:0 48px}
-.skill{padding:14px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:170px 1fr;gap:18px}
-.skill h3{font-family:var(--mono);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);line-height:1.9}
-.skill p{font-size:14.5px}
+/* projects */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.filters button{padding:8px 15px;border-radius:999px;border:1px solid var(--line2);font-size:14px;color:var(--ink2);background:var(--card);transition:all .2s}
+.filters button:hover{border-color:var(--ink)}
+.filters button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.filters button small{font-family:var(--mono);font-size:11px;opacity:.6;margin-left:4px}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:left;transition:transform .35s var(--e),box-shadow .35s var(--e),border-color .35s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(14,17,22,.35);border-color:var(--line2)}
+.card.hide{display:none}
+.card .media{position:relative;aspect-ratio:16/10;background:#e6e5df;overflow:hidden}
+.card .media img,.card .media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--e),opacity .3s}
+.card:hover .media img{transform:scale(1.04)}
+.card .media video{opacity:0}
+.card .media.playing video{opacity:1}
+.card .media .badge{position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;background:rgba(255,255,255,.92);padding:4px 9px;border-radius:999px;color:var(--ink2)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none}
+.dot.sim{background:var(--sim)}.dot.comp{background:var(--comp)}.dot.none{display:none}
+.card .media .vid{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:10.5px;background:rgba(14,17,22,.7);color:#fff;padding:3px 7px;border-radius:6px}
+.card .media.txt{display:flex;flex-direction:column;justify-content:flex-end;padding:18px;background:linear-gradient(135deg,#eef0f7,#e9e8e2);background-image:radial-gradient(circle at 1px 1px,rgba(14,17,22,.08) 1px,transparent 1.2px),linear-gradient(135deg,#eef0f7,#ecebe5);background-size:16px 16px,auto}
+.card .media.txt b{font-size:clamp(30px,3vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1}
+.card .media.txt span{font-size:13.5px;color:var(--mut);margin-top:6px}
+.card .body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+.card .cat{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.card h3{font-weight:600;font-size:17.5px;letter-spacing:-.01em;line-height:1.3;margin:6px 0 6px}
+.card p{font-size:14.5px;color:var(--mut);line-height:1.5;flex:1}
+.card .km{display:flex;align-items:baseline;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.card .km b{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.card .km span{font-size:13px;color:var(--mut)}
+.card .km i{margin-left:auto;font-style:normal;color:var(--acc);font-size:14px;font-weight:500;transition:transform .3s var(--e)}
+.card:hover .km i{transform:translateX(3px)}
+
+/* drawer */
+dialog#dr{position:fixed;inset:0 0 0 auto;margin:0;height:100%;max-height:100%;width:min(760px,100vw);max-width:100vw;border:0;padding:0;background:var(--card);color:var(--ink);box-shadow:-30px 0 80px -20px rgba(0,0,0,.3)}
+dialog#dr::backdrop{background:rgba(14,17,22,.45);backdrop-filter:blur(2px)}
+dialog#dr[open]{animation:slide .45s var(--e)}
+@keyframes slide{from{transform:translateX(40px);opacity:0}}
+.drbar{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 22px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.drbar .nav2{display:flex;gap:6px}
+.drbar button{width:36px;height:36px;border-radius:9px;border:1px solid var(--line2);display:grid;place-items:center;font-size:18px;line-height:1;transition:border-color .2s,background-color .2s}
+.drbar button:hover{border-color:var(--ink)}
+.drbar .x{background:var(--ink);color:#fff;border-color:var(--ink)}
+.drin{padding:26px 28px 40px}
+.drin h3{font-weight:600;font-size:clamp(24px,3vw,32px);letter-spacing:-.025em;line-height:1.15;margin:8px 0 10px}
+.drin .st{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;padding:4px 10px;border-radius:999px;border:1px solid var(--line2)}
+.drin .sum{color:var(--ink2);font-size:16px;margin:12px 0 20px}
+.viewer{border-radius:12px;overflow:hidden;background:#0e1116;aspect-ratio:16/9}
+.viewer img,.viewer video{width:100%;height:100%;object-fit:contain}
+.vcap{font-size:13.5px;color:var(--mut);margin-top:8px;min-height:20px}
+.thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.thumbs button{flex:0 0 84px;height:56px;border-radius:8px;overflow:hidden;border:2px solid transparent;opacity:.6;transition:opacity .2s,border-color .2s}
+.thumbs button[aria-current=true]{opacity:1;border-color:var(--acc)}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.dspec{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:10px;margin:22px 0}
+.dspec div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.dspec b{display:block;font-size:18px;font-weight:600;letter-spacing:-.015em;line-height:1.2}
+.dspec span{display:block;font-size:12.5px;color:var(--mut);margin-top:3px;line-height:1.35}
+.dsec{display:grid;gap:18px}
+.dsec h4{font-size:13px;font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px}
+.chips span{font-family:var(--mono);font-size:12px;padding:4px 9px;border-radius:7px;background:var(--bg);border:1px solid var(--line);color:var(--ink2)}
+.reflow{animation:fade .45s var(--e)}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+
+/* skills + edu */
+.sk{display:grid;grid-template-columns:repeat(2,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.sk div{padding:22px 24px;border-top:1px solid var(--line)}
+.sk div:nth-child(-n+2){border-top:0}
+.sk div:nth-child(even){border-left:1px solid var(--line)}
+.sk h3{font-size:15px;font-weight:600;margin-bottom:10px}
+.sk p{display:flex;flex-wrap:wrap;gap:6px}
+.sk p span{font-size:13.5px;padding:4px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line);color:var(--ink2)}
+.edu{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-bottom:18px}
+.edu>div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
+.edu .gpa{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.edu .gpa b.big{font-size:52px;font-weight:600;letter-spacing:-.04em;line-height:1}
+.edu .gpa b.big small{font-size:18px;color:var(--mut);font-weight:500;letter-spacing:0}
+.edu h3{font-weight:600;font-size:21px;letter-spacing:-.015em}
+.edu .sub{color:var(--mut);font-size:14.5px;margin-top:2px}
+.edu .cw{margin-top:16px;font-size:14px;color:var(--ink2);line-height:1.7}
+.aw{list-style:none;display:grid;gap:14px}
+.aw li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+.aw i{width:36px;height:36px;border-radius:10px;background:var(--acc-soft);display:grid;place-items:center;font-style:normal;font-size:17px}
+.aw b{font-weight:600;font-size:15px;display:block;line-height:1.3}
+.aw span{font-size:13.5px;color:var(--mut)}
 
 /* contact */
-.contact h2{font-size:clamp(26px,3vw,34px);margin-top:6px}
-.contact p.sub{color:var(--mut);margin-top:10px;max-width:520px}
-.contact .mail{display:inline-block;margin-top:22px;font-size:clamp(18px,2.2vw,22px);font-weight:500;color:var(--blue-soft);text-decoration:none;border-bottom:1px solid currentColor}
-.contact .links{margin-top:24px}
-.contact-grid{display:grid;grid-template-columns:1fr 280px;gap:56px;align-items:start}
-.contact-fig img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px}
-.contact-fig figcaption{font-size:13.5px;color:var(--mut);margin-top:10px;line-height:1.45}
-.xp-photo{width:180px;aspect-ratio:3/4;object-fit:cover;object-position:center 30%;border-radius:4px;margin-top:16px}
-footer{padding:56px 0 40px;color:#6f7786;font-size:13px;font-family:var(--mono)}
+.contact{background:var(--dark);color:#f3f4f6;padding:110px 0 0;margin-top:40px}
+.contact .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center}
+.contact h2{font-weight:600;font-size:clamp(40px,6vw,76px);letter-spacing:-.04em;line-height:1}
+.contact h2 span{color:#8b93a1}
+.contact p{color:#a6adba;font-size:17px;margin-top:18px;max-width:520px}
+.contact .mail{display:inline-flex;align-items:center;gap:10px;margin-top:28px;font-size:clamp(20px,2.4vw,28px);font-weight:500;text-decoration:none;border-bottom:1px solid #3a404b;padding-bottom:4px;transition:border-color .2s,color .2s}
+.contact .mail:hover{border-color:#fff}
+.contact .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.contact .btn{background:var(--dark2);border-color:var(--dline);color:#f3f4f6}
+.contact .btn:hover{border-color:#f3f4f6}
+.contact .btn.pri{background:#fff;color:var(--ink);border-color:#fff}
+.contact .btn.pri:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+.pray{margin:0}
+.pray img{border-radius:14px;width:100%;max-width:340px;margin-left:auto;transform:rotate(2deg);transition:transform .5s var(--e);box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+.pray:hover img{transform:rotate(0)}
+.pray figcaption{font-size:13.5px;color:#8b93a1;margin-top:14px;text-align:right;max-width:340px;margin-left:auto}
+footer{background:var(--dark);color:#6b7280;font-size:13px;padding:56px 0 34px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--dline);padding-top:22px}
 
 /* reveal */
-.rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .8s var(--e),transform .8s var(--e)}
 .rv.in{opacity:1;transform:none}
 
-@media (max-width:980px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .card,.card.big{grid-column:span 1}
-  .feat,.feat.flip{grid-template-columns:1fr;gap:32px}
-  .feat.flip .feat-media{order:0}
-  .feat-media{position:static;max-width:420px}
-  .facts{grid-template-columns:repeat(2,1fr)}
-  .facts div:nth-child(3){border-left:none;padding-left:0}
-  .facts div:nth-child(n+3){border-top:1px solid var(--rule)}
-  .xp{grid-template-columns:1fr;gap:14px}
+@media (max-width:1020px){
+  .hero .grid,.contact .grid,.edu{grid-template-columns:1fr}
+  .mosaic{height:460px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .kpi:nth-child(3){border-left:0}
+  .kpi:nth-child(n+3){border-top:1px solid var(--line)}
+  .job{grid-template-columns:1fr;gap:18px}
+  .job .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+  .job .meta .logo{margin:0}
+  .job .meta .tag{margin:0}
+  .res{grid-template-columns:repeat(2,1fr)}
+  .also{grid-template-columns:1fr}
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .sh{grid-template-columns:1fr}.sh p{justify-self:start}
+  .pray img,.pray figcaption{margin-left:0;text-align:left}
 }
 @media (max-width:640px){
   .wrap{padding:0 16px}
-  .nav ul{gap:14px;font-size:13px}
-  .nav ul li.opt{display:none}
-  .nav .full{display:none}.nav .short{display:inline}
-  .hero{padding:112px 0 56px}
-  .hero .lede{font-size:16.5px}
-  .now{grid-template-columns:1fr}
-  .now a,.now a+a{padding:12px 0;border-left:none}
-  .now a+a{border-top:1px solid #262d38}
-  .grid{grid-template-columns:1fr}
-  .gallery{grid-template-columns:repeat(3,1fr);gap:8px}
-  .feat-media{max-width:none}
-  .feat-media video,.feat-media img{aspect-ratio:4/5}
-  .contact-grid{grid-template-columns:1fr!important}
-  .contact-fig{max-width:300px}
-  .filters{flex-wrap:nowrap;overflow-x:auto;margin-left:-16px;margin-right:-16px;padding:0 16px 4px;scrollbar-width:none}
-  .filters button{flex:none}
-  .skill{grid-template-columns:1fr;gap:2px}
-  section.band{padding:72px 0}
-  .dlg-top,.dlg-scroll{padding-left:16px;padding-right:16px}
-  .scope canvas{height:120px}
+  section{padding:72px 0}
+  .hero{padding-top:100px}
+  .nav ul{display:none}
+  .mosaic{height:380px;min-height:0;gap:8px}
+  .kpi{padding:18px}
+  .job{padding:20px}
+  .also .res{grid-template-columns:repeat(2,1fr)}
+  .pgrid{grid-template-columns:1fr}
+  .sk{grid-template-columns:1fr}
+  .sk div:nth-child(even){border-left:0}
+  .sk div:nth-child(2){border-top:1px solid var(--line)}
+  .dspec{grid-template-columns:1fr 1fr}
+  .drin{padding:20px 18px 36px}
+  .edu .gpa b.big{font-size:42px}
 }
-@media (prefers-reduced-motion:reduce){
-  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
-  .rv{opacity:1;transform:none}
-}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.kpis .bar .b1{width:86.3%}}
 </style>
 </head>
-<body data-theme="dark">
-
-<nav class="nav" id="nav"><div class="wrap">
-  <a class="mark" href="#top"><span class="full">Abderrahmene Naceri</span><span class="short">A. Naceri</span></a>
+<body>
+<nav class="nav" id="nav">
+ <div class="wrap">
+  <a class="mark" href="#top"><b>AN</b>Abderrahmene Naceri</a>
   <ul>
-    <li><a href="#rover">Rover</a></li>
-    <li><a href="#fsae">Formula SAE</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li class="opt"><a href="#experience">Experience</a></li>
-    <li class="opt"><a href="#contact">Contact</a></li>
+   <li><a href="#experience">Experience</a></li>
+   <li><a href="#projects">Projects</a></li>
+   <li><a href="#skills">Skills</a></li>
+   <li><a href="#education">Education</a></li>
+   <li><a href="#contact">Contact</a></li>
   </ul>
-</div></nav>
+  <a class="cv" href="Abderrahmene_Naceri_Project_Portfolio.pdf" target="_blank" rel="noopener">PDF portfolio</a>
+ </div>
+ <div id="prog"></div>
+</nav>
 
-<header class="hero" id="top" data-theme="dark">
-  <div class="wrap">
-    <p class="label">Electrical Engineering · University of Windsor</p>
-    <h1>Abderrahmene Naceri</h1>
-    <p class="lede">I work on robot arm controls for the UWindsor Rover Team and embedded software for our Formula SAE car, and build FPGA and embedded projects on the side.</p>
-    <div class="now">
-      <a href="#rover"><b>Arm Team Lead</b><span>UWindsor Rover Team</span></a>
-      <a href="#fsae"><b>Embedded Software and Controls</b><span>Lancer Motorsports, Formula SAE</span></a>
-      <a href="#experience"><b>Controls Engineering Co-op</b><span>Ford Motor Company, summer 2026</span></a>
-    </div>
-    <div class="links">
-      <a class="btn primary" href="#rover">See the work</a>
-      <a class="btn" href="Abderrahmene_Naceri_Project_Portfolio.pdf" download>PDF portfolio</a>
-      <a class="btn" href="https://www.linkedin.com/in/abderrahmene-naceri" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="https://github.com/ANaceri26" target="_blank" rel="noopener">GitHub</a>
-    </div>
-    <div class="scope" aria-hidden="true">
-      <canvas id="scope"></canvas>
-      <div class="cap"><span><b>SCL / SDA</b> from my I2C controller's simulation: one write to address 0x50</span><span>START · 0x50 W · 0x38 · 0x86 · 0x5C · STOP</span></div>
-    </div>
+<header class="hero" id="top">
+ <div class="wrap grid">
+  <div>
+   <span class="status rv"><i></i>Open to co-op and internship roles</span>
+   <h1 class="rv">Abderrahmene Naceri<span>Electrical Engineering · Robotics, embedded and controls</span></h1>
+   <p class="lede rv">I build robots, embedded systems and industrial controls. This summer I raised a machine-vision pass rate from <b>47.2% to 86.3%</b> as a controls co-op at <b>Ford</b>. Right now I lead the <b>5-DOF robotic arm</b> on the UWindsor Rover Team and write CAN firmware for our <b>Formula SAE</b> car.</p>
+   <div class="ctas rv">
+    <a class="btn pri" href="#projects">View projects</a>
+    <a class="btn" href="#experience">Experience</a>
+    <a class="btn" href="https://www.linkedin.com/in/abderrahmene-naceri" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.6 8.65 21 11.2 21 14.5V21h-4v-5.8c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.52-2.25 3.1V21H9z"/></svg>LinkedIn</a>
+    <a class="btn" href="https://github.com/ANaceri26" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+   </div>
+   <div class="facts rv">
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Windsor, Ontario</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg>University of Windsor · GPA 3.9</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>English, French, Arabic, Spanish</span>
+   </div>
   </div>
+  <div class="mosaic rv" aria-label="Project footage">
+   <figure class="tile tall"><video autoplay muted loop playsinline poster="media/rover_full.jpg" data-src="media/rover_full.mp4"></video><figcaption class="cap"><span>Rover Team · 5-DOF arm</span></figcaption></figure>
+   <figure class="tile"><video autoplay muted loop playsinline poster="media/vga.jpg" data-src="media/vga.mp4"></video><figcaption class="cap"><span>VGA frame buffer on an FPGA</span></figcaption></figure>
+   <figure class="tile"><video autoplay muted loop playsinline poster="media/catdog.jpg" data-src="media/catdog.mp4"></video><figcaption class="cap"><span>Edge AI on an ESP32-S3</span></figcaption></figure>
+  </div>
+ </div>
 </header>
 
-<section class="band" id="rover" data-theme="light">
-  <div class="wrap feat">
-    <figure class="feat-media rv">
-      <video data-src="media/rover_full.mp4" poster="media/rover_full.jpg" muted loop playsinline preload="none" data-open="rover"></video>
-      <figcaption>The rover and its arm in the team bay. Tap for the full gallery.</figcaption>
-    </figure>
-    <div class="feat-body rv">
-      <p class="label">01 · Robotics</p>
-      <h2>UWindsor Rover Team</h2>
-      <p class="role"><b>Arm Team Lead, Robotics Controls and Software</b> · Jan 2026 to present</p>
-      <p class="intro">I lead the robotic arm: the control software that turns operator input into safe multi-axis motion, the simulation it's tested in first, and the motor and encoder bring-up underneath it.</p>
-      <div class="facts" id="rover-facts"></div>
-      <ul class="pts">
-        <li>C++ command interface mapping keyboard and joystick input (Thrustmaster T.16000M) to multi-axis arm motion, with joint-limit and collision-safety logic.</li>
-        <li>Jetson Orin NX as the arm computer, with an Arduino layer for low-level actuators; high-level commands kept separate from motor control.</li>
-        <li>Gazebo simulation of the CAD arm with ROS 2 Humble, MoveIt 2 and ros2_control: plans in RViz, executes in Gazebo. MuJoCo workspace and manipulability analysis.</li>
-        <li>ODrive S1 with a REV NEO v2.1 BLDC motor, evaluating Hall and AMT212B-OD absolute encoder feedback and fixing velocity-limit and feedback faults.</li>
-      </ul>
-      <div class="gallery" data-gallery="rover"></div>
-      <button class="more" data-open="rover">Open the full write-up</button>
-    </div>
+<div class="impact">
+ <div class="wrap">
+  <div class="kpis rv" id="kpis">
+   <div class="kpi"><div class="v num"><span data-to="86.3" data-dec="1">86.3</span><small>%</small></div><div class="l">Machine-vision pass rate at Ford, up from 47.2%</div><div class="bar"><i class="b0"></i><i class="b1"></i></div></div>
+   <div class="kpi"><div class="v num">$<span data-to="1250">1,250</span><small>+</small></div><div class="l">Saved on a robot repair, avoiding 10+ days of downtime</div><div class="s">GOLD STAR RECOGNITION</div></div>
+   <div class="kpi"><div class="v num"><span data-to="70">70</span><small>+ min/day</small></div><div class="l">Saved by my Excel/VBA scrap tracker, covering six-figure weekly scrap</div><div class="s">FORD · CONTROLS CO-OP</div></div>
+   <div class="kpi"><div class="v num"><span data-to="2000">2,000</span></div><div class="l">Randomized transactions on my I2C controller RTL, 0 failures</div><div class="s">SYSTEMVERILOG · VERILATOR</div></div>
   </div>
+ </div>
+</div>
+
+<main>
+<section id="experience">
+ <div class="wrap">
+  <div class="sh"><div><div class="eyebrow rv">Experience</div><h2 class="rv">Industry, research and teams</h2></div><p class="rv">Click "show all" on any role for the full list. Photos and videos open in the viewer.</p></div>
+  <div class="xp" id="xp"></div>
+  <div class="also" id="also" style="margin-top:18px"></div>
+ </div>
 </section>
 
-<section class="band" id="fsae" data-theme="dark">
-  <div class="wrap feat flip">
-    <figure class="feat-media rv">
-      <img src="img/fsae_bench_probe.jpg" alt="Team PCB on the bench, connected to a laptop over USB and probed with a Fluke multimeter" data-open="fsae">
-      <figcaption>Bench-testing a team PCB with a Fluke 179 while it's connected to the laptop. Tap for the full gallery.</figcaption>
-    </figure>
-    <div class="feat-body rv">
-      <p class="label">02 · Vehicle electronics</p>
-      <h2>Lancer Motorsports, Formula SAE</h2>
-      <p class="role"><b>Embedded Software and Controls</b> · Jan 2026 to present</p>
-      <p class="intro">I write and debug the firmware that moves data around the car: CAN traffic between the inverter, BMS and dashboard, the throttle and brake inputs, and the links to the telemetry system.</p>
-      <div class="facts" id="fsae-facts"></div>
-      <ul class="pts">
-        <li>CAN read/write over SPI with MCP2515 interfaces on Arduino Uno, Arduino Mega and STM32 Nucleo-H723ZG, including frame, wiring and baud-rate debugging.</li>
-        <li>Classic CAN and FDCAN handling for inverter, BMS, dashboard and fault/status traffic with periodic transmit intervals.</li>
-        <li>Multi-ADC throttle and brake acquisition on the H723ZG: 12-bit conversion, channel ranking and circular DMA, with sampling and DMA conflicts resolved.</li>
-        <li>Reverse-engineered and bench-tested dashboard I/O, including I2C expanders and 7-segment driver behaviour.</li>
-        <li>Simulink VCU and driver-interface models built from signal definitions before committing to hardware; Raspberry Pi data-offload workflow.</li>
-      </ul>
-      <div class="gallery" data-gallery="fsae"></div>
-      <button class="more" data-open="fsae">Open the full write-up</button>
-    </div>
+<section id="projects" style="padding-top:40px">
+ <div class="wrap">
+  <div class="sh"><div><div class="eyebrow rv">Projects</div><h2 class="rv">Things I've built</h2></div><p class="rv">FPGA, embedded, machine learning and software. Hover a card to preview the video, click for the full write-up.</p></div>
+  <div class="filters rv" id="filters">
+   <button aria-pressed="true" data-f="all">All<small></small></button>
+   <button aria-pressed="false" data-f="fpga">FPGA and digital<small></small></button>
+   <button aria-pressed="false" data-f="embedded">Embedded<small></small></button>
+   <button aria-pressed="false" data-f="ml">Machine learning<small></small></button>
+   <button aria-pressed="false" data-f="mech">Robotics and mechanical<small></small></button>
+   <button aria-pressed="false" data-f="soft">Software and security<small></small></button>
   </div>
+  <div class="pgrid" id="pgrid"></div>
+ </div>
 </section>
 
-<section class="band" id="projects" data-theme="light">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div><p class="label">03 · Projects</p><h2>FPGA, embedded and other projects</h2></div>
-      <p>Each card shows how far the project got: running on hardware, verified in simulation, or entered in a competition. Click a card for details.</p>
-    </div>
-    <div class="filters rv" role="group" aria-label="Filter projects">
-      <button aria-pressed="true" data-f="all">All</button>
-      <button aria-pressed="false" data-f="fpga">FPGA and digital logic</button>
-      <button aria-pressed="false" data-f="embedded">Embedded and IoT</button>
-      <button aria-pressed="false" data-f="mech">Robotics and mechanical</button>
-      <button aria-pressed="false" data-f="soft">Software and security</button>
-    </div>
-    <div class="grid" id="grid"></div>
-  </div>
+<section id="skills" style="padding-top:40px">
+ <div class="wrap">
+  <div class="sh"><div><div class="eyebrow rv">Skills</div><h2 class="rv">Toolkit</h2></div></div>
+  <div class="sk rv" id="sk"></div>
+ </div>
 </section>
 
-<section class="band" id="experience" data-theme="dark">
-  <div class="wrap">
-    <div class="sec-head rv"><div><p class="label">04 · Research and industry</p><h2>Experience</h2></div></div>
-    <article class="xp rv">
-      <div><h3>Controls Engineering Co-op</h3><div class="org">Ford Motor Company, Windsor</div><div class="when">May – Aug 2026</div><img class="xp-photo" src="img/ford_coop.jpg" alt="Abderrahmene in his Ford work jacket" loading="lazy"></div>
-      <ul>
-        <li>Troubleshot PLC, HMI, robot, RFID and machine-vision faults on a live engine line with Siemens STEP 7, TIA Portal and Octoplant.</li>
-        <li>30+ hours of machine-vision analysis to separate true rejects, false rejects and false accepts, and tune inspection limits with rollback notes.</li>
-        <li>Built Python, Excel/VBA and Power BI tools for production-mix forecasting and scrap tracking.</li>
-      </ul>
-    </article>
-    <article class="xp rv" style="margin-top:32px">
-      <div><h3>Undergraduate Research Assistant, Embedded Systems and Sensor Validation</h3><div class="org">MicroNano Mechatronics Lab, University of Windsor</div><div class="when">2026 – present</div></div>
-      <div>
-        <ul>
-          <li>Built a benchtop rotary test platform with an 800-microstep/rev stepper (0.45°/step) and an encoder-equipped BLDC motor to compare open-loop and closed-loop positioning.</li>
-          <li>Integrated a 240 MHz dual-core XIAO ESP32-S3 with rotary-encoder and accelerometer interfaces for 360° angle tracking, multi-revolution counting and tilt sensing.</li>
-          <li>Evaluating AMT102 incremental (up to 8,192 quadrature counts/rev) and AMT23 absolute (12/14-bit) encoders to replace Phidget-based feedback and characterize angular error.</li>
-          <li>Developing a vacuum-chamber sensor-validation rig: PCB placement, electrical feedthrough limits, and power/signal transmission through slip rings.</li>
-        </ul>
-        <div class="gallery" data-gallery="micro"></div>
-      </div>
-    </article>
+<section id="education" style="padding-top:40px;padding-bottom:40px">
+ <div class="wrap">
+  <div class="sh"><div><div class="eyebrow rv">Education</div><h2 class="rv">Education and awards</h2></div></div>
+  <div class="edu">
+   <div class="rv">
+    <div class="gpa"><div><h3>University of Windsor</h3><div class="sub">BASc, Honours Electrical Engineering Co-op · Sept 2024 – present</div></div><b class="big num">3.9<small>/4.0</small></b></div>
+    <div class="cw"><b>Coursework:</b> Microprocessors, Digital Logic Design, Electronics I and II, Electromechanical Systems, Signals and Systems, Circuit Analysis I and II, Electromagnetic Fields, Engineering Design, Software Fundamentals, Probability and Statistics, Differential Equations, Linear Algebra</div>
+   </div>
+   <div class="rv">
+    <ul class="aw">
+     <li><i>🥉</i><div><b>Bronze Governor General's Academic Medal</b><span>Highest GPA of the graduating class, École secondaire de Lamothe-Cadillac</span></div></li>
+     <li><i>🤝</i><div><b>Lieutenant Governor's Community Volunteer Award</b><span>1,000+ volunteer hours supporting youth and newcomers</span></div></li>
+     <li><i>⭐</i><div><b>Gold Star, Ford Motor Company</b><span>Owned the A055 robot recovery end to end</span></div></li>
+     <li><i>🏆</i><div><b>3rd place, ICTC CyberTitan (Ontario)</b><span>Province-wide cyber-defence competition</span></div></li>
+    </ul>
+   </div>
   </div>
+ </div>
 </section>
+</main>
 
-<section class="band" id="skills" data-theme="light">
-  <div class="wrap">
-    <div class="sec-head rv"><div><p class="label">05 · Tools</p><h2>Skills</h2></div></div>
-    <div class="skills rv">
-      <div class="skill"><h3>Digital design</h3><p>Verilog, SystemVerilog, Intel Quartus, ModelSim/Questa, Icarus Verilog, Verilator, Yosys, MAX 10 / DE10-Lite, FSMs, self-checking testbenches, SDC timing constraints</p></div>
-      <div class="skill"><h3>Embedded</h3><p>STM32 Nucleo H723ZG, ESP32-S3, Arduino Uno/Mega, Raspberry Pi/Pico, Jetson Orin NX, CAN/FDCAN, I2C, SPI, UART, ADC, DMA</p></div>
-      <div class="skill"><h3>Languages</h3><p>C, C++, Python, MATLAB, VBA, HTML, Bash. Spoken: English, French, Arabic, Spanish</p></div>
-      <div class="skill"><h3>Robotics</h3><p>ROS 2, MoveIt 2, URDF, RViz, MuJoCo, Simulink, ODrive S1, BLDC and encoder control, kinematics</p></div>
-      <div class="skill"><h3>Controls</h3><p>PLC ladder logic, Siemens STEP 7, TIA Portal, HMIs, RFID, machine vision, interlocks, error proofing</p></div>
-      <div class="skill"><h3>ML and data</h3><p>TensorFlow, TensorFlow Lite Micro, int8 quantization, Power BI, Excel/VBA</p></div>
-      <div class="skill"><h3>Systems</h3><p>Ubuntu Server, Linux CLI, self-hosting, DNS, VPN, Kali Linux, Nmap, Wireshark, Metasploit</p></div>
-      <div class="skill"><h3>Mechanical</h3><p>AutoCAD, GD&amp;T (ASME Y14.5), electrical drawings, oscilloscopes, 3D printing</p></div>
-    </div>
+<section class="contact" id="contact">
+ <div class="wrap grid">
+  <div>
+   <div class="eyebrow rv" style="color:#8b93a1">Contact</div>
+   <h2 class="rv" style="margin-top:14px">Let's build<br><span>something.</span></h2>
+   <p class="rv">Looking for co-op and internship roles in embedded systems, controls, robotics and digital design.</p>
+   <a class="mail rv" href="mailto:naceri@uwindsor.ca">naceri@uwindsor.ca <span aria-hidden="true">→</span></a>
+   <div class="row rv">
+    <a class="btn" href="tel:+12262460994">(226) 246-0994</a>
+    <a class="btn" href="https://www.linkedin.com/in/abderrahmene-naceri" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://github.com/ANaceri26" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn pri" href="Abderrahmene_Naceri_Project_Portfolio.pdf" target="_blank" rel="noopener">PDF portfolio</a>
+   </div>
   </div>
+  <figure class="pray rv"><img src="img/coop_prayer.jpg" alt="Me praying over a co-op application" loading="lazy"><figcaption>Live footage of me submitting another co-op application. Please hire me so I can stop praying 😭😂</figcaption></figure>
+ </div>
 </section>
+<footer><div class="wrap"><span>© 2026 Abderrahmene Naceri</span><span>Windsor, Ontario</span></div></footer>
 
-<section class="band contact" id="contact" data-theme="dark">
-  <div class="wrap rv contact-grid"><div>
-    <p class="label">06 · Contact</p>
-    <h2>Get in touch</h2>
-    <p class="sub">Open to co-op and internship roles in embedded, controls, robotics and digital design.</p>
-    <a class="mail" href="mailto:naceri@uwindsor.ca">naceri@uwindsor.ca</a>
-    <div class="links">
-      <a class="btn" href="tel:+12262460994">(226) 246-0994</a>
-      <a class="btn" href="https://www.linkedin.com/in/abderrahmene-naceri" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="https://github.com/ANaceri26" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn" href="Abderrahmene_Naceri_Project_Portfolio.pdf" download>PDF portfolio</a>
-    </div>
-    </div>
-    <figure class="contact-fig">
-      <img src="img/coop_prayer.jpg" alt="Abderrahmene with hands together in front of the co-op application portal" loading="lazy">
-      <figcaption>Live footage of me submitting another co-op application. Please hire me so I can stop praying 😭😂</figcaption>
-    </figure>
-  </div>
-  <footer><div class="wrap">Abderrahmene Naceri · Windsor, Ontario</div></footer>
-</section>
-
-<dialog id="dlg" aria-labelledby="dlg-title">
-  <div class="dlg">
-    <div class="dlg-top"><div><span class="status" id="dlg-status"><i></i><span></span></span><h3 id="dlg-title"></h3><p class="tag" id="dlg-tag"></p></div><button class="close" id="dlg-close" aria-label="Close">×</button></div>
-    <div class="dlg-scroll">
-      <div class="stage" id="stage"></div>
-      <p class="stage-cap" id="stage-cap"></p>
-      <div class="thumbs" id="thumbs"></div>
-      <div class="specs" id="dlg-specs"></div>
-      <div class="cols" id="dlg-cols"></div>
-      <p class="tools" id="dlg-tools" style="margin-top:20px;font-size:13px;color:#5c6370;font-family:var(--mono)"></p>
-    </div>
-  </div>
+<dialog id="dr" aria-label="Details">
+ <div class="drbar"><span class="eyebrow" id="drtag"></span><div class="nav2"><button id="drprev" aria-label="Previous">‹</button><button id="drnext" aria-label="Next">›</button><button class="x" id="drx" aria-label="Close">×</button></div></div>
+ <div class="drin" id="drin"></div>
 </dialog>
 
 <script>
@@ -549,106 +551,198 @@ const F={
        ['Encoders',['AMT102 incremental, up to 8,192 quadrature counts/rev.','AMT23 absolute, 12/14-bit.','Replacing Phidget-based feedback; angular-error characterization.']],
        ['Vacuum rig',['PCB placement inside the chamber.','Electrical feedthrough limits.','Power and signal through slip rings.']]]}
 };
-['rover','fsae','micro'].forEach(k=>{
-  const fx=document.getElementById(k+'-facts');
-  if(fx) fx.innerHTML=F[k].sp.map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('');
-  const g=document.querySelector(`[data-gallery=${k}]`);
-  F[k].m.forEach((m,i)=>{ if(i===0&&k!=='micro') return;
-    const b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label','Open: '+m.c);
-    b.innerHTML=`<img src="${m.v?m.p:m.i}" alt="" loading="lazy">`+(m.v?'<span class="vtag">Video</span>':'');
-    b.onclick=()=>openP(F[k],i); g.appendChild(b);
-  });
-});
-document.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',()=>openP(F[el.dataset.open],0)));
+/* ---- updates from master.md (Nov 2026) ---- */
+const byId=id=>P.find(p=>p.id===id);
+byId('catdog').cat='embedded ml';
+byId('i2c').sp=[['18-state','controller FSM'],['2,000','randomized transactions, 0 failures'],['9,010','commands per seed'],['1,600 B','C/RTL co-sim payload']];
+byId('i2clink').sp=[['10 kHz','bus, Uno at 0x42'],['72 pins','144 constraints fixed + checked'],['4,076 B','Uno flash (12%)'],['384 B','Uno RAM (18%)']];
+byId('cad').cat='mech';byId('sim').cat='mech';
+P.push(
+ {id:'mfcc',cat:'ml soft',text:1,st:['none',''],t:'Spoken-Word Recognition with MFCC Features',
+  s:'An MFCC feature pipeline and logistic-regression classifier for 4 spoken words, tested across speakers.',
+  tools:'Python, NumPy, SciPy, scikit-learn, pandas, Matplotlib, Tkinter, Jupyter',
+  sp:[['90%','same-speaker accuracy'],['1,320','WAV recordings'],['26','features per recording'],['48.3 → 70.0%','team accuracy with 20× data']],
+  sec:[['Features',['25 ms frames, 10 ms hop, pre-emphasis, Hamming window, 512-point FFT, 40 mel filters, DCT.','26 features per recording across 1,320 team recordings.']],
+       ['Evaluation',['Multinomial logistic regression for 4 words; all 9 cross-speaker train/test pairs scored with precision, recall, F1, confusion matrices and Cohen\'s kappa.','Leave-one-speaker-out validation rose from 40% to 65% with a 20× larger training set.']],
+       ['Tooling',['Tkinter recording browser with waveform and spectrogram views, playback and review notes.']]]},
+ {id:'mnist',cat:'ml soft',text:1,st:['none',''],t:'Handwritten Digit Classifier Neural Network',
+  s:'A 784-128-64-10 dense network trained on MNIST, then tested on digits handwritten by 101 students.',
+  tools:'Python, TensorFlow, Keras, NumPy, scikit-learn, Matplotlib',
+  sp:[['95.29%','MNIST test accuracy'],['0.952','macro F1'],['85.9%','on 1,010 student digits'],['109,386','parameters']],
+  sec:[['Model',['ReLU hidden layers, softmax output, Adam optimizer, sparse categorical cross-entropy.','No sign of overfitting across 10 epochs.']],
+       ['Evaluation',['Per-digit precision, recall and confusion matrices on 10,000 test images.','Generalization test: 868 of 1,010 real handwritten digits correct after preprocessing.']]]},
+ {id:'sound',cat:'embedded',text:1,st:HW,t:'ESP32-S3 Sound-Level Monitor with Binary Telemetry',
+  s:'A microphone-based sound-level classifier on a XIAO ESP32-S3 Sense, streaming compact binary packets to a Python logger.',
+  tools:'C++, Arduino, ESP32-S3, I2S, Python, pyserial',
+  sp:[['16 kHz','PDM audio over I2S'],['20 ms','RMS windows'],['4 levels','every 5 s'],['8 bytes','telemetry packet']],
+  sec:[['Firmware',['Normalized RMS amplitude over 20 ms windows; peak-window RMS sets one of 4 levels.','Non-blocking millis()-based LED patterns per level.']],
+       ['Telemetry',['Little-endian packet with a 0xAA sync header.','Python pyserial decoder with resynchronization, validity checks and CSV logging.']]]},
+ {id:'focus',cat:'soft',text:1,st:['none',''],t:'FocusLock Productivity App',
+  s:'A Windows focus app that blocks distracting sites and apps, with timed sessions, breaks and a reward bank.',
+  tools:'Python, JavaScript, Tkinter, JSON, pytest, Ruff, GitHub Actions, PyInstaller',
+  sp:[['3 layers','hosts file, DNS, browser extension'],['CI','pytest + Ruff on every push'],['.exe','packaged with PyInstaller']],
+  sec:[['Blocking',['Redirects domains to 0.0.0.0 in the hosts file with blacklist and whitelist modes, admin elevation and safe restore.','DNS-level filtering, a JavaScript browser extension and app blocking; strict mode stops early exits.']],
+       ['App',['Tkinter GUI with timer, flow and goal sessions, break overlays after 90 minutes, and streaks.','Starts with Windows; analytics for focus time, sessions and streak history.']]]}
+);
+const ORDER=['i2c','vga','catdog','i2clink','dma','finder','mnist','mfcc','sound','adder','focus','ih','fert','cyber','solar','server','lab','sim','cad','login','grades'];
+P.sort((a,b)=>ORDER.indexOf(a.id)-ORDER.indexOf(b.id));
+const KM={i2c:['0 failures','2,000 random transactions'],vga:['307,200 px','checked every frame'],catdog:['int8','MobileNetV2 on an ESP32-S3'],i2clink:['3.3 ↔ 5 V','FPGA to Arduino'],dma:['260,000+','contended bus beats'],finder:['80','devices tracked'],mnist:['95.29%','test accuracy'],mfcc:['90%','same-speaker accuracy'],sound:['8-byte','binary telemetry'],adder:['0–31','on a DE10-Lite'],focus:['CI/CD','pytest + Ruff'],ih:['83%','trajectory accuracy'],fert:['< 40 s','course, finalist'],cyber:['3rd','in Ontario'],solar:['2 panels','solar charging'],server:['24/7','self-hosted'],lab:['Nmap','Wireshark, Metasploit'],sim:['y = 0.5','matched analytically'],cad:['ASME Y14.5','GD&T drawing set'],login:['SHA-256','30 s lockout'],grades:['VBA','auto worksheets']};
 
-const grid=document.getElementById('grid');
-const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
-const statusHTML=st=>`<span class="status ${st[0]}"><i></i><span>${esc(st[1].trim())}</span></span>`;
-P.forEach(p=>{
-  const b=document.createElement('button');
-  b.className='card rv'+(p.big?' big':'')+(p.text?' text':''); b.dataset.cat=p.cat; b.type='button';
-  b.setAttribute('aria-label',p.t+': open details');
-  let media='';
-  if(!p.text){const m=p.m[0];
-    media=m.v?`<div class="media"><video data-src="${m.v}" poster="${m.p}" muted loop playsinline preload="none" data-auto></video><span class="play">Video</span></div>`
-             :`<div class="media"><img src="${m.i}" alt="" loading="lazy"></div>`;}
-  b.innerHTML=media+`<div class="body">${statusHTML(p.st)}<h3>${esc(p.t)}</h3><p>${esc(p.s)}</p><div class="tools">${esc(p.tools)}</div></div>`;
-  if(!p.text) b.addEventListener('click',()=>openP(p)); else b.style.cursor='default';
-  grid.appendChild(b);
-});
 
-/* filters */
-document.querySelectorAll('.filters button').forEach(btn=>btn.addEventListener('click',()=>{
-  document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===btn));
-  const f=btn.dataset.f;
-  grid.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',f!=='all'&&!c.dataset.cat.split(' ').includes(f)));
-}));
-
-/* dialog */
-const dlg=document.getElementById('dlg'),stage=document.getElementById('stage'),thumbs=document.getElementById('thumbs');
-function show(p,i){
-  const m=p.m[i];
-  stage.innerHTML=m.v?`<video src="${m.v}" poster="${m.p}" controls autoplay muted loop playsinline></video>`:`<img src="${m.i}" alt="${esc(m.c||p.t)}">`;
-  document.getElementById('stage-cap').textContent=m.c||'';
-  thumbs.querySelectorAll('button').forEach((t,j)=>t.setAttribute('aria-current',j===i));
-}
-function openP(p,start=0){
-  const s=document.getElementById('dlg-status'); s.className='status '+p.st[0]; s.querySelector('span').textContent=p.st[1].trim();
-  document.getElementById('dlg-title').textContent=p.t; document.getElementById('dlg-tag').textContent=p.s;
-  thumbs.innerHTML=p.m.length>1?p.m.map((m,i)=>`<button aria-label="Show item ${i+1}"><img src="${m.v?m.p:m.i}" alt=""></button>`).join(''):'';
-  thumbs.querySelectorAll('button').forEach((t,i)=>t.onclick=()=>show(p,i));
-  document.getElementById('dlg-specs').innerHTML=(p.sp||[]).map(x=>`<div><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join('');
-  document.getElementById('dlg-specs').style.display=p.sp?'grid':'none';
-  document.getElementById('dlg-cols').innerHTML=(p.sec||[]).map(x=>`<div><h4>${esc(x[0])}</h4><ul>${x[1].map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`).join('');
-  document.getElementById('dlg-tools').textContent='Tools: '+p.tools;
-  show(p,start); dlg.showModal(); document.querySelector('.dlg-scroll').scrollTop=0;
-}
-document.getElementById('dlg-close').onclick=()=>dlg.close();
-dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
-dlg.addEventListener('close',()=>{stage.innerHTML=''});
-
-/* theme transitions, reveals, lazy video */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const themeObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.body.dataset.theme=e.target.dataset.theme}),{rootMargin:'-45% 0px -50% 0px'});
-document.querySelectorAll('header[data-theme],section[data-theme]').forEach(s=>themeObs.observe(s));
-const rvObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rvObs.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
-const vObs=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;
-  if(e.isIntersecting){if(!v.src)v.src=v.dataset.src; if(!reduce)v.play().catch(()=>{})} else v.pause();}),{threshold:.35});
-document.querySelectorAll('video[data-src]').forEach(v=>vObs.observe(v));
-const nav=document.getElementById('nav');
-addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30),{passive:true});
 
-/* oscilloscope */
-const W={"scl":{"init":1,"edges":[[0.03615,0],[0.04692,1],[0.06077,0],[0.07154,1],[0.08538,0],[0.09615,1],[0.11,0],[0.12077,1],[0.13462,0],[0.14538,1],[0.15923,0],[0.17,1],[0.18385,0],[0.19462,1],[0.20846,0],[0.21923,1],[0.23308,0],[0.24385,1],[0.25769,0],[0.27462,1],[0.28846,0],[0.29923,1],[0.31308,0],[0.32385,1],[0.33769,0],[0.34846,1],[0.36231,0],[0.37308,1],[0.38692,0],[0.39769,1],[0.41154,0],[0.42231,1],[0.43615,0],[0.44692,1],[0.46077,0],[0.47154,1],[0.48538,0],[0.50231,1],[0.51615,0],[0.52692,1],[0.54077,0],[0.55154,1],[0.56538,0],[0.57615,1],[0.59,0],[0.60077,1],[0.61462,0],[0.62538,1],[0.63923,0],[0.65,1],[0.66385,0],[0.67462,1],[0.68846,0],[0.69923,1],[0.71308,0],[0.73,1],[0.74385,0],[0.75462,1],[0.76846,0],[0.77923,1],[0.79308,0],[0.80385,1],[0.81769,0],[0.82846,1],[0.84231,0],[0.85308,1],[0.86692,0],[0.87769,1],[0.89154,0],[0.90231,1],[0.91615,0],[0.92692,1],[0.94077,0],[0.95154,1]]},"sda":{"init":1,"edges":[[0.02692,0],[0.03769,1],[0.06231,0],[0.08692,1],[0.11154,0],[0.25923,1],[0.26538,0],[0.31462,1],[0.38846,0],[0.48692,1],[0.51769,0],[0.61615,1],[0.66538,0],[0.71462,1],[0.72077,0],[0.74538,1],[0.77,0],[0.79462,1],[0.86846,0],[0.96538,1]]}};
-const LABELS=[[0.0277,'START'],[0.145,'0x50 W'],[0.375,'0x38'],[0.603,'0x86'],[0.84,'0x5C'],[0.967,'STOP']];
-const BOUNDS=[0.0277,0.2615,0.489,0.7177,0.967];
-const cv=document.getElementById('scope'),cx=cv.getContext('2d');
-function lvl(sig,x){let v=W[sig].init;for(const [t,b] of W[sig].edges){if(t>x)break;v=b}return v}
-function draw(prog){
-  const dpr=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;
-  if(cv.width!==w*dpr){cv.width=w*dpr;cv.height=h*dpr}
-  cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,w,h);
-  const L=48,R=w-4,span=R-L,rows=[['SCL',h*.28],['SDA',h*.66]],amp=h*.2;
-  cx.font='500 11px "IBM Plex Mono",ui-monospace,monospace';cx.textBaseline='middle';
-  cx.strokeStyle='rgba(143,176,255,.14)';cx.lineWidth=1;
-  BOUNDS.forEach(b=>{const x=L+b*span;cx.setLineDash([3,5]);cx.beginPath();cx.moveTo(x,6);cx.lineTo(x,h-4);cx.stroke()});cx.setLineDash([]);
-  rows.forEach(([name,y])=>{
-    cx.fillStyle='#8e9bb8';cx.fillText(name,0,y);
-    const end=prog;cx.beginPath();cx.strokeStyle=name==='SCL'?'#8fb0ff':'#ffffff';cx.lineWidth=2;
-    let v=W[name.toLowerCase()].init;cx.moveTo(L,y+(v?-amp/2:amp/2));
-    for(const [t,b] of W[name.toLowerCase()].edges){if(t>end)break;const x=L+t*span;cx.lineTo(x,y+(v?-amp/2:amp/2));cx.lineTo(x,y+(b?-amp/2:amp/2));v=b}
-    cx.lineTo(L+end*span,y+(v?-amp/2:amp/2));cx.stroke();
-  });
-  cx.textAlign='center';
-  LABELS.forEach(([x,t])=>{if(w<640&&(t==='START'||t==='STOP'))return;if(x<=prog){cx.fillStyle=t==='START'||t==='STOP'?'#ff7a5c':'#c6d0e4';cx.fillText(t,L+x*span,h*.06+4)}});
-  cx.textAlign='left';
-  if(prog<1){const x=L+prog*span;cx.strokeStyle='rgba(255,77,46,.9)';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(x,10);cx.lineTo(x,h-4);cx.stroke()}
+/* ---------- experience ---------- */
+const EXP=[
+ {key:'ford',logo:['F','#1d3b8f'],dt:'MAY – AUG 2026',org:'Ford Motor Company',loc:'Windsor, ON · Engine plant',tag:'Co-op',
+  role:'Controls and Software Engineering Co-op',
+  sum:'Controls, robotics and vision troubleshooting on a live engine-manufacturing line, plus the software tools engineering used to track scrap and forecast material.',
+  res:[['47.2 → 86.3%','vision inspection pass rate'],['$1,250+','saved; 10+ days downtime avoided'],['20+','automated pallets recovered'],['70+ min/day','saved by my scrap tracker']],
+  pts:['Troubleshot <b>PLC, HMI, robot, RFID, safety and machine-vision faults across 19+ stations</b> by tracing ladder logic, checking physical I/O and watching live PLC variables in Siemens STEP 7, TIA Portal and Octoplant.',
+       '<b>30+ hours of machine-vision analysis</b> on two stations, separating true rejects, false rejects and false accepts; adjusted validated limits (690 → 515 and 111 → 95) with rollback notes, <b>raising the pass rate from 47.2% to 86.3%</b>.',
+       'Earned a <b>Gold Star</b> for owning the A055 robot recovery: isolated a failed safety control board, sourced and negotiated the part <b>$1,250+ cheaper</b>, and avoided <b>10+ days of downtime</b>.',
+       'Programmed and recovered <b>20+ automated production pallets</b> by rebuilding tags and converting hex/decimal/ASCII tag memory, preserving engine serial-number traceability.'],
+  more:['Built an <b>Excel/VBA scrap-tracking system</b> with daily, weekly and monthly Top-10 reports, saving 70+ minutes a day and tracking six-figure scrap cost every week.',
+        'Developed the <b>Journal Grade Analyzer/Forecaster</b> (Python, Excel/VBA, Power BI) to predict liner usage from block, crank and bearing data for proactive material planning.',
+        'Defined PLC/AAS/FIS alert requirements with consecutive-failure counting so recurring camera, error-proofing and overcycle faults escalate without nuisance alerts.',
+        'Produced electrical drawings for new C151 camera wiring and control-relay integration for launch-team installation.',
+        'Upgraded <b>25+ engine-line computers</b> from Windows XP to supported systems for PLC programming and diagnostics.',
+        'Ran helium-leak-test root-cause analysis, isolating leakage at a hose-end quick connect by swapping test equipment and routing engines through known-good stations.',
+        'Inspected 650+ rejected engine racks and adjusted detection switches to restore reliable fixture-state detection.',
+        'Wrote a prompt-engineering quick guide for engineers and organized manuals in SharePoint for Ford\'s internal LLM maintenance assistant.']},
+ {key:'rover',logo:['R','#0f766e'],dt:'JAN 2026 – PRESENT',org:'UWindsor Rover Team',loc:'Windsor, ON',tag:'Team lead',
+  role:'Arm Team Lead, Robotics Controls and Software',
+  sum:'I lead the 4-member subteam building the rover\'s 5-DOF robotic arm and gripper: control software, simulation and motor bring-up.',
+  res:[['5-DOF','arm + gripper'],['4','engineers on my subteam'],['Jetson Orin NX','arm computer + Arduino layer'],['ROS 2 Humble','MoveIt 2, URDF, RViz']],
+  pts:['Wrote a <b>C++ command interface</b> mapping keyboard input to 5-DOF arm motion, with <b>joint-limit and collision-safety logic</b> that blocks over-extension.',
+       'Built a <b>ROS 2 Humble / MoveIt 2 simulation</b> workflow with URDF, RViz, TF and inverse-kinematics testing before hardware integration; MuJoCo workspace and manipulability analysis.',
+       'Integrated an <b>ODrive S1 with a REV NEO v2.1 BLDC</b>, evaluating Hall and AMT212B-OD absolute encoder feedback and fixing velocity-limit and feedback faults.',
+       'Modular architecture separating high-level commands (Jetson Orin NX) from low-level motor control (Arduino), with Thrustmaster T.16000M joystick mapping.'],
+  more:['Modeled drivetrain velocity and direction control in Simulink before hardware deployment.',
+        'Documented setup and run procedures so teammates can reuse the ROS 2 stack on Ubuntu.'],
+  media:'rover'},
+ {key:'fsae',logo:['L','#b91c1c'],dt:'JAN 2026 – PRESENT',org:'Formula SAE Lancer Motorsports',loc:'Windsor, ON',tag:'~12-person team',
+  role:'Embedded Software and Controls',
+  sum:'Firmware that moves data around the car: CAN between the inverter, BMS and dashboard, throttle and brake sensing, and data logging.',
+  res:[['2 × 500 kbps','CAN buses'],['16-slot','interrupt-fed ring buffer'],['1.5 → 387.5','ADC sample cycles; stable readings'],['3 ADCs','4 channels, 3 DMA streams']],
+  pts:['Implemented <b>Classic CAN/FDCAN on 2 buses at 500 kbps</b> for the inverter, BMS, dashboard and fault traffic: 5 message IDs, 100 ms and 500 ms transmit intervals, and a <b>16-slot interrupt-fed ring buffer</b>.',
+       'Configured the <b>STM32 Nucleo-H723ZG ADCs</b> for throttle and brake (3 ADCs, 4 channels, 12-bit, circular DMA) and fixed sampling/DMA conflicts by raising sample time <b>from 1.5 to 387.5 cycles</b>.',
+       'Brought up CAN over SPI with <b>MCP2515</b> on Uno, Mega and Nucleo-H723ZG, debugging frames, wiring and baud rates.',
+       'Built <b>Simulink VCU and driver-interface models</b> from real signal definitions to test logic before the hardware arrived.'],
+  more:['Raspberry Pi/Linux script that copies vehicle test data to USB at every pit stop.',
+        'Debugged PCB traces and signal integrity with oscilloscopes; reverse-engineered dashboard I2C expanders and 7-segment drivers.',
+        'Reviewed wiring before power-up and coached teammates on safe supply and ground practice, preventing 5 V-to-ground shorts.'],
+  media:'fsae'},
+ {key:'micro',logo:['M','#7c3aed'],dt:'SEPT 2026 – PRESENT',org:'MicroNano Mechatronics Lab',loc:'University of Windsor',tag:'Research',
+  role:'Undergraduate Research Assistant, Embedded Systems and Sensor Validation',
+  sum:'Test rigs for validating rotary sensors and positioning, from the bench to a vacuum chamber.',
+  res:[['Within 1°','of commanded angle'],['0.45°/step','800-microstep stepper'],['8,192','counts/rev (AMT102)'],['240 MHz','dual-core ESP32-S3']],
+  pts:['Built a <b>benchtop rotary test platform</b> comparing an 800-microstep stepper with an encoder-equipped BLDC (open vs closed loop), <b>holding position within 1° of the command</b>.',
+       'Integrated a <b>XIAO ESP32-S3</b> with encoder and accelerometer interfaces for 360° tracking, multi-revolution counting and tilt sensing.',
+       'Evaluating <b>AMT102</b> incremental and <b>AMT23</b> absolute (12/14-bit) encoders to replace Phidget feedback; developing a vacuum-chamber rig with slip-ring power and signal.'],
+  media:'micro'}
+];
+const ALSO=[
+ {logo:['FM','#ea580c'],dt:'MAY – AUG 2025',org:'Freedom Mobile',role:'OSS Network Operations Intern',
+  res:[['23+','wireless sites monitored'],['32+ h','outage root-caused'],['4G / 5G','RAN, fiber, microwave']],
+  pts:['Root-caused a <b>32+ hour site outage</b> from a PPP link failure: replaced the IDU, isolated the fault to the outdoor radio unit and restored service.','Verified links with Nokia network management, ping and link checks; tested radios with spectrum analyzers and assessed backup-battery SOH/SOC.']},
+ {logo:['UR','#475569'],dt:'SEPT 2024 – MAY 2025',org:'UWindsor Rocketry',role:'Research and Design Member',
+  res:[['AutoCAD','2D layouts + schematics'],['0','payload/recovery interferences'],['Materials','strength-to-weight study']],
+  pts:['Material-selection research for flight-critical parts, verifying specific-strength ratios to cut projected structural weight.','AutoCAD layouts and assembly schematics confirming zero interference between payload and recovery systems before manufacturing.']}
+];
+function mediaThumb(m){return m.v?m.p:m.i}
+function jobHTML(j){
+  const strip=j.media?`<div class="strip">${F[j.media].m.map((m,k)=>`<button data-g="${j.media}" data-k="${k}" aria-label="Open ${esc(m.c||'media')}"><img src="${mediaThumb(m)}" alt="" loading="lazy">${m.v?'<span class="pl"></span>':''}</button>`).join('')}</div>`:'';
+  return `<article class="job rv" id="job-${j.key}"><div class="meta"><div class="logo" style="background:${j.logo[1]}">${j.logo[0]}</div><div><div class="dt">${j.dt}</div><div class="org">${j.org}</div><div class="loc">${j.loc}</div></div><span class="tag">${j.tag}</span></div>
+   <div><h3>${j.role}</h3><p class="sum">${j.sum}</p>
+   <div class="res">${j.res.map(r=>`<div><b class="num">${r[0]}</b><span>${r[1]}</span></div>`).join('')}</div>
+   <ul class="pts">${j.pts.map(x=>`<li>${x}</li>`).join('')}</ul>
+   ${j.more&&j.more.length?`<div class="more-pts"><ul class="pts">${j.more.map(x=>`<li>${x}</li>`).join('')}</ul></div><button class="toggle" aria-expanded="false">Show all <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button>`:''}
+   ${strip}</div></article>`;
 }
-if(reduce){draw(1);addEventListener('resize',()=>draw(1))}
-else{let t0=null;const dur=5200,hold=2600;
-  function loop(ts){if(t0===null)t0=ts;const e=(ts-t0)%(dur+hold);draw(Math.min(1,e/dur));requestAnimationFrame(loop)}
-  requestAnimationFrame(loop)}
+$('#xp').innerHTML=EXP.map(jobHTML).join('');
+$('#also').innerHTML=ALSO.map(j=>`<article class="job rv"><div class="meta"><div class="logo" style="background:${j.logo[1]};font-size:13px">${j.logo[0]}</div><div><div class="dt">${j.dt}</div><div class="org">${j.org}</div></div></div><div><h3 style="font-size:20px">${j.role}</h3><div class="res">${j.res.map(r=>`<div><b class="num" style="font-size:17px">${r[0]}</b><span>${r[1]}</span></div>`).join('')}</div><ul class="pts">${j.pts.map(x=>`<li>${x}</li>`).join('')}</ul></div></article>`).join('');
+$$('.job .toggle').forEach(b=>b.addEventListener('click',()=>{const j=b.closest('.job'),o=j.classList.toggle('open');b.setAttribute('aria-expanded',o);b.firstChild.textContent=o?'Show less ':'Show all '}));
+
+/* ---------- projects ---------- */
+const CATN={fpga:'FPGA',embedded:'Embedded',ml:'Machine learning',mech:'Robotics / mech',soft:'Software'};
+const stC=st=>st[0]==='sim'?'sim':st[0]==='comp'?'comp':st[0]==='none'?'none':'';
+const stT=st=>(st[1]||'').trim();
+const grid=$('#pgrid');
+P.forEach((p,i)=>{
+  const m=p.m&&p.m[0],vid=p.m&&p.m.find(x=>x.v);
+  const km=KM[p.id]||['',''];
+  let media;
+  if(m){media=`<div class="media"><img src="${mediaThumb(m)}" alt="" loading="lazy">${vid?`<video muted loop playsinline preload="none" data-src="${vid.v}"></video><span class="vid">VIDEO</span>`:''}${stT(p.st)?`<span class="badge"><i class="dot ${stC(p.st)}"></i>${esc(stT(p.st))}</span>`:''}</div>`}
+  else media=`<div class="media txt"><b class="num">${esc(km[0])}</b><span>${esc(km[1])}</span>${stT(p.st)?`<span class="badge" style="position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;background:rgba(255,255,255,.92);padding:4px 9px;border-radius:999px;color:var(--ink2);margin:0"><i class="dot ${stC(p.st)}"></i>${esc(stT(p.st))}</span>`:''}</div>`;
+  const c=document.createElement('button');c.className='card rv';c.dataset.cat=p.cat;c.dataset.i=i;
+  c.innerHTML=`${media}<div class="body"><div class="cat">${p.cat.split(' ').map(x=>CATN[x]).join(' · ')}</div><h3>${esc(p.t)}</h3><p>${esc(p.s)}</p><div class="km">${m?`<b class="num">${esc(km[0])}</b><span>${esc(km[1])}</span>`:`<span>${esc(p.tools.split(',').slice(0,3).join(','))}</span>`}<i>Details →</i></div></div>`;
+  c.addEventListener('click',()=>openProject(i));
+  if(vid){const md=c.querySelector('.media'),v=md.querySelector('video');
+    c.addEventListener('mouseenter',()=>{if(reduce)return;if(!v.src)v.src=v.dataset.src;v.play().then(()=>md.classList.add('playing')).catch(()=>{})});
+    c.addEventListener('mouseleave',()=>{v.pause();md.classList.remove('playing')});}
+  grid.appendChild(c);
+});
+$$('#filters button').forEach(b=>{const f=b.dataset.f;b.querySelector('small').textContent=f==='all'?P.length:P.filter(p=>p.cat.split(' ').includes(f)).length;
+  b.addEventListener('click',()=>{$$('#filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    $$('.card').forEach(c=>{const show=f==='all'||c.dataset.cat.split(' ').includes(f);c.classList.toggle('hide',!show);if(show){c.classList.add('in')}})})});
+
+/* ---------- drawer ---------- */
+const dr=$('#dr'),drin=$('#drin');let ctx=null;
+function mediaEl(m){return m.v?`<video src="${m.v}" poster="${m.p}" muted loop playsinline autoplay controls></video>`:`<img src="${m.i}" alt="${esc(m.c||'')}">`}
+function gallery(ms,start){
+  if(!ms||!ms.length)return'';const m=ms[start||0];
+  return `<div class="viewer">${mediaEl(m)}</div><div class="vcap">${esc(m.c||'')}</div>${ms.length>1?`<div class="thumbs">${ms.map((x,j)=>`<button data-j="${j}" aria-current="${j===(start||0)}" aria-label="Item ${j+1}"><img src="${mediaThumb(x)}" alt="" loading="lazy"></button>`).join('')}</div>`:''}`;
+}
+function bindGal(ms){drin.querySelectorAll('.thumbs button').forEach(b=>b.addEventListener('click',()=>{const m=ms[+b.dataset.j],v=drin.querySelector('.viewer');v.innerHTML=mediaEl(m);v.classList.remove('reflow');void v.offsetWidth;v.classList.add('reflow');drin.querySelector('.vcap').textContent=m.c||'';drin.querySelectorAll('.thumbs button').forEach(x=>x.setAttribute('aria-current',x===b))}))}
+function renderProject(i){
+  const p=P[i];ctx={type:'p',i};
+  $('#drtag').textContent=`Project ${i+1} of ${P.length}`;
+  const sp=p.sp?`<div class="dspec" style="--n:${Math.min(4,p.sp.length)}">${p.sp.map(s=>`<div><b class="num">${esc(s[0])}</b><span>${esc(s[1])}</span></div>`).join('')}</div>`:'';
+  const sec=p.sec?`<div class="dsec">${p.sec.map(s=>`<div><h4>${esc(s[0])}</h4><ul class="pts">${s[1].map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
+  drin.innerHTML=`<div class="reflow"><div class="eyebrow">${p.cat.split(' ').map(x=>CATN[x]).join(' · ')}</div><h3>${esc(p.t)}</h3>${stT(p.st)?`<span class="st"><i class="dot ${stC(p.st)}"></i>${esc(stT(p.st))}</span>`:''}<p class="sum">${esc(p.s)}</p>${gallery(p.m)}${sp}${sec}<div class="chips">${p.tools.split(',').map(t=>`<span>${esc(t.trim())}</span>`).join('')}</div></div>`;
+  bindGal(p.m||[]);dr.scrollTop=0;
+}
+function renderMedia(g,k){
+  const f=F[g];ctx={type:'g',g,k};$('#drtag').textContent=f.t;
+  drin.innerHTML=`<div class="reflow"><div class="eyebrow">Photos and video</div><h3>${esc(f.t)}</h3>${gallery(f.m,k)}</div>`;bindGal(f.m);dr.scrollTop=0;
+}
+function openProject(i){renderProject(i);if(!dr.open)dr.showModal()}
+$$('.strip button').forEach(b=>b.addEventListener('click',()=>{renderMedia(b.dataset.g,+b.dataset.k);if(!dr.open)dr.showModal()}));
+const step=d=>{if(!ctx)return;if(ctx.type==='p'){const vis=P.map((p,i)=>i).filter(i=>!$$('.card')[i].classList.contains('hide'));const k=vis.indexOf(ctx.i);renderProject(vis[(k+d+vis.length)%vis.length])}else{const n=F[ctx.g].m.length;renderMedia(ctx.g,(ctx.k+d+n)%n)}};
+$('#drprev').onclick=()=>step(-1);$('#drnext').onclick=()=>step(1);$('#drx').onclick=()=>dr.close();
+dr.addEventListener('click',e=>{if(e.target===dr)dr.close()});
+dr.addEventListener('keydown',e=>{if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+dr.addEventListener('close',()=>{drin.innerHTML=''});
+
+/* ---------- skills ---------- */
+const SK=[
+ ['Embedded systems','STM32 Nucleo-H723ZG, ESP32-S3, Arduino Uno/Mega, Raspberry Pi/Pico, Jetson Orin NX, CAN/FDCAN, I2C, SPI, UART, I2S, ADC, DMA, MCP2515'],
+ ['Controls and automation','PLC ladder logic, Siemens STEP 7, TIA Portal, Unity Pro XL, Octoplant, HMIs, RFID/tag readers, machine vision, interlocks, Poka-Yoke, robot safety'],
+ ['Digital design','Verilog, SystemVerilog, Intel Quartus, ModelSim/Questa, Icarus Verilog, Verilator, Yosys, MAX 10 FPGA, testbenches, timing constraints'],
+ ['Robotics and simulation','ROS 2, MoveIt 2, URDF, RViz, MuJoCo, Simulink, ODrive S1, BLDC and encoder control, kinematics'],
+ ['Languages','C, C++, Python, MATLAB, VBA, HTML, Bash'],
+ ['Software, data and AI','NumPy, pandas, SciPy, scikit-learn, TensorFlow, Keras, TFLite Micro, Power BI, Excel/VBA, pytest, GitHub Actions'],
+ ['Engineering and manufacturing','AutoCAD, electrical drawings, oscilloscopes, spectrum analyzers, GD&T, leak testing, root-cause analysis, Kaizen/Six Sigma, 3D printing'],
+ ['Systems and security','Ubuntu Server, Linux CLI, Docker, networking, DHCP, Kali Linux, Nmap, Wireshark, Metasploit, firewall hardening']
+];
+$('#sk').innerHTML=SK.map(s=>`<div><h3>${s[0]}</h3><p>${s[1].split(', ').map(x=>`<span>${esc(x)}</span>`).join('')}</p></div>`).join('');
+
+/* ---------- hero media, reveals, counters, nav ---------- */
+$$('.mosaic video').forEach(v=>{v.src=v.dataset.src;if(reduce){v.removeAttribute('autoplay');v.pause()}});
+const vio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!reduce)e.target.play().catch(()=>{})}else e.target.pause()}));
+$$('.mosaic video').forEach(v=>vio.observe(v));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -4% 0px'});
+$$('.rv').forEach(el=>io.observe(el));
+const kio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;kio.unobserve(e.target);e.target.classList.add('in');
+  e.target.querySelectorAll('[data-to]').forEach(el=>{const to=+el.dataset.to,dec=+(el.dataset.dec||0),f=v=>dec?v.toFixed(dec):Math.round(v).toLocaleString();
+    if(reduce){el.textContent=f(to);return}const t0=performance.now();(function s(t){const k=Math.min(1,(t-t0)/1500),v=to*(1-Math.pow(1-k,4));el.textContent=f(v);if(k<1)requestAnimationFrame(s)})(t0)})}),{threshold:.4});
+kio.observe($('#kpis'));
+const nav=$('#nav'),prog=$('#prog'),links=$$('.nav ul a'),secs=links.map(a=>$(a.getAttribute('href')));
+function onScroll(){const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;nav.classList.toggle('on',y>10);prog.style.transform=`scaleX(${h>0?y/h:0})`;
+  let a=-1;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<innerHeight*.35)a=i});links.forEach((l,i)=>l.classList.toggle('act',i===a))}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
 </script>
 </body>
 </html>
